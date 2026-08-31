@@ -1,0 +1,57 @@
+---
+import CtaLink from "../components/CtaLink.astro";
+import PageIntro from "../components/PageIntro.astro";
+import PlaceholderPanel from "../components/PlaceholderPanel.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
+---
+
+<BaseLayout
+  title="Why Donate To Us"
+  description="Why donations to North Shore Red support practical grassroots work."
+>
+  <PageIntro
+    eyebrow="Why Donate To Us"
+    title="Why Donate To Us"
+    lead="Contributions help keep practical grassroots work moving: voter outreach, events, volunteer coordination, and support for conservative candidates."
+  />
+  <section class="route-section">
+    <PlaceholderPanel
+      title="Ready to Donate?"
+      body="The main Donate buttons throughout the site now go directly to the donation page currently used by North Shore Red, so a ready donor is not forced through this page first."
+      review="Confirm the final platform, account ownership, reporting needs, and disclosure language before launch."
+    >
+      <div class="section-actions">
+        <CtaLink href={site.donationUrl} variant="primary" external>
+          Donate Now
+        </CtaLink>
+      </div>
+    </PlaceholderPanel>
+
+    <div class="donation-copy-grid">
+      <article class="plain-card">
+        <h2>Volunteer-Led Work</h2>
+        <p>
+          North Shore Red's current public language emphasizes that the
+          organization is led by volunteers and that nobody is paid for their
+          efforts on behalf of North Shore Red.
+        </p>
+      </article>
+      <article class="plain-card">
+        <h2>Candidate Support</h2>
+        <p>
+          Current-site language says that "100% of your contributions are
+          dedicated towards helping elect Republicans." Keep this message, but
+          confirm the exact wording and required legal disclosures before launch.
+        </p>
+      </article>
+      <article class="plain-card">
+        <h2>Disclosure Review</h2>
+        <p>
+          Add counsel-approved fundraising, tax, attribution, campaign-finance,
+          and platform language here before this page is published publicly.
+        </p>
+      </article>
+    </div>
+  </section>
+</BaseLayout>

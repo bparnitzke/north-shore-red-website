@@ -1,0 +1,27 @@
+---
+import CtaLink from "../components/CtaLink.astro";
+import PageIntro from "../components/PageIntro.astro";
+import PlaceholderPanel from "../components/PlaceholderPanel.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
+---
+
+<BaseLayout title="Volunteer" description="North Shore Red volunteer route placeholder.">
+  <PageIntro
+    eyebrow="Volunteer"
+    title="Volunteer With North Shore Red"
+    lead="This page is prepared for a future volunteer-interest workflow once the destination for submissions is approved."
+  />
+  <section class="route-section">
+    <PlaceholderPanel
+      title="Volunteer Interest Workflow Pending"
+      body="This prototype does not collect names, phone numbers, email addresses, or other personal information."
+      review="Confirm data destination, privacy language, security expectations, retention rules, and consent copy before enabling any form."
+    >
+      <div class="section-actions">
+        <CtaLink href="/events/" variant="outline">View Events</CtaLink>
+        <CtaLink href={site.donationUrl} variant="primary" external>Donate</CtaLink>
+      </div>
+    </PlaceholderPanel>
+  </section>
+</BaseLayout>

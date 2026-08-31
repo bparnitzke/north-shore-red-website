@@ -1,0 +1,68 @@
+---
+import CtaLink from "./CtaLink.astro";
+import { primaryNav, site } from "../data/site";
+
+const currentPath = Astro.url.pathname;
+const isActive = (href: string, external = false) =>
+  !external && (href === "/" ? currentPath === "/" : currentPath.startsWith(href));
+---
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="/" aria-label="North Shore Red home">
+      <img src={site.logo} alt="" width="946" height="929" />
+      <span class="brand__text">
+        <span>North Shore</span>
+        <strong>Red</strong>
+      </span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      {primaryNav.map((item) => (
+        <a
+          href={item.href}
+          target={item.external ? "_blank" : undefined}
+          rel={item.external ? "noopener noreferrer" : undefined}
+          aria-current={isActive(item.href, item.external) ? "page" : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <CtaLink
+      href={site.donationUrl}
+      variant="primary"
+      external
+      class="site-header__donate"
+    >
+      Donate
+    </CtaLink>
+
+    <details class="mobile-nav">
+      <summary aria-label="Open navigation menu">
+        <span class="menu-icon" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+        <span class="summary-label">Menu</span>
+      </summary>
+      <div class="mobile-nav__panel">
+        <nav aria-label="Mobile navigation">
+          {primaryNav.map((item) => (
+            <a
+              href={item.href}
+              target={item.external ? "_blank" : undefined}
+              rel={item.external ? "noopener noreferrer" : undefined}
+              aria-current={isActive(item.href, item.external) ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+        <CtaLink href={site.donationUrl} variant="primary" external>Donate</CtaLink>
+      </div>
+    </details>
+  </div>
+</header>

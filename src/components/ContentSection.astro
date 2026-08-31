@@ -1,0 +1,28 @@
+---
+export interface Props {
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  tone?: "light" | "muted" | "dark";
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  lead,
+  tone = "light",
+  class: className = ""
+} = Astro.props;
+---
+
+<section class:list={["section", `section--${tone}`, className]}>
+  <div class="section__inner">
+    <div class="section__heading">
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <h2>{title}</h2>
+      {lead && <p class="section__lead">{lead}</p>}
+    </div>
+    <slot />
+  </div>
+</section>

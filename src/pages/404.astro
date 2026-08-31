@@ -1,0 +1,22 @@
+---
+import CtaLink from "../components/CtaLink.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
+---
+
+<BaseLayout title="Page Not Found" description="Page not found.">
+  <section class="not-found">
+    <div class="not-found__inner">
+      <p class="eyebrow">404</p>
+      <h1>That page is not available.</h1>
+      <p>
+        The site is still in its first phase, and some future pages are only
+        placeholders. Start from the homepage or continue to the donation page.
+      </p>
+      <div class="hero__actions">
+        <CtaLink href="/" variant="outline">Home</CtaLink>
+        <CtaLink href={site.donationUrl} variant="primary" external>Donate</CtaLink>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

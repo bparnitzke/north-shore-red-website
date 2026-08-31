@@ -1,0 +1,24 @@
+---
+import PageIntro from "../components/PageIntro.astro";
+import PlaceholderPanel from "../components/PlaceholderPanel.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Terms and Conditions"
+  description="Placeholder Terms and Conditions route for North Shore Red."
+  noindex={true}
+>
+  <PageIntro
+    eyebrow="Legal Review Required"
+    title="Terms and Conditions"
+    lead="This placeholder must be replaced with North Shore Red-specific terms before public launch."
+  />
+  <section class="route-section">
+    <PlaceholderPanel
+      title="Terms Draft Pending"
+      body="Confirm website ownership, acceptable use, third-party links, donation-platform disclaimers, intellectual-property language, event registration terms, SMS program terms, opt-out instructions, help instructions, and jurisdiction-specific requirements."
+      review="Future SMS terms must be reviewed by counsel and the messaging provider before use in any production 10DLC registration or public opt-in flow."
+    />
+  </section>
+</BaseLayout>

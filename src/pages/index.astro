@@ -1,0 +1,167 @@
+---
+import ContentSection from "../components/ContentSection.astro";
+import CtaLink from "../components/CtaLink.astro";
+import ImpactGrid from "../components/ImpactGrid.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+  futureWorkItems,
+  socialPlaceholders,
+  volunteerAreas
+} from "../data/homepage";
+import { site } from "../data/site";
+---
+
+<BaseLayout
+  title="North Shore Red"
+  description="A redesigned first-phase homepage for North Shore Red, focused on donations, volunteering, practical grassroots work, and future voter-planning architecture."
+>
+  <section class="hero">
+    <div class="hero__inner">
+      <div class="hero__copy">
+        <p class="eyebrow">Wisconsin grassroots action</p>
+        <h1>Organized neighbors. Practical conservative results.</h1>
+        <p class="hero__lead">
+          North Shore Red helps Wisconsin conservatives turn local energy into
+          useful grassroots work: showing up, supporting candidates, and keeping
+          voters engaged across the North Shore and beyond.
+        </p>
+        <div class="hero__actions" aria-label="Primary actions">
+          <CtaLink href={site.donationUrl} variant="primary" external>Donate</CtaLink>
+          <CtaLink href="/volunteer/" variant="outline">Volunteer</CtaLink>
+        </div>
+        <p class="legal-note">
+          Fundraising disclosure placeholder. Counsel-approved language required
+          before launch.
+        </p>
+      </div>
+
+      <aside class="hero__media" aria-label="Future organization photograph placeholder">
+        <div class="photo-placeholder">
+          <img src={site.logo} alt="North Shore Red logo" width="946" height="929" />
+          <div>
+            <p class="photo-placeholder__title">Organization photo pending</p>
+            <p>
+              Replace with a verified, organization-supplied event or volunteer
+              photograph after rights and captions are confirmed.
+            </p>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <ContentSection
+    eyebrow="Impact"
+    title="A Record of Showing Up"
+    lead="These figures come from the existing public site and are intentionally stored in one editable data file for verification before launch."
+    tone="light"
+  >
+    <ImpactGrid />
+  </ContentSection>
+
+  <ContentSection
+    eyebrow="Why Support North Shore Red"
+    title="Fund Work People Can See"
+    lead="Contributions should connect directly to tangible grassroots work. This first-phase copy avoids claims that still need client, counsel, or reporting confirmation."
+    tone="muted"
+  >
+    <div class="split-copy">
+      <div>
+        <p>
+          North Shore Red is being positioned around practical activity: voter
+          outreach, events, volunteer coordination, and candidate support that
+          can be planned, measured, and improved.
+        </p>
+        <p>
+          The donation path remains the primary call to action because the
+          organization needs durable support to keep that work moving.
+        </p>
+      </div>
+      <aside class="review-box">
+        <h3>Disclosure Placeholder</h3>
+        <p>
+          Counsel-approved fundraising, tax, campaign-finance, and attribution
+          language must be added before launch. Do not treat prototype copy as
+          legal guidance.
+        </p>
+        <div class="section-actions">
+          <CtaLink href={site.donationUrl} variant="secondary" external>
+            Donate
+          </CtaLink>
+        </div>
+      </aside>
+    </div>
+  </ContentSection>
+
+  <ContentSection
+    eyebrow="Future Work"
+    title="Build on What Has Already Worked"
+    lead="The site is structured so confirmed plans can be added without redesigning the page."
+    tone="light"
+  >
+    <div class="three-column">
+      {futureWorkItems.map((item) => (
+        <article class="plain-card">
+          <h3>{item.title}</h3>
+          <p>{item.body}</p>
+        </article>
+      ))}
+    </div>
+  </ContentSection>
+
+  <ContentSection
+    eyebrow="Volunteer"
+    title="There Is Useful Work for More Hands"
+    lead="People can help in visible and behind-the-scenes ways, without requiring every supporter to participate in politics the same way."
+    tone="dark"
+  >
+    <div class="volunteer-grid">
+      {volunteerAreas.map((area) => (
+        <article>
+          <h3>{area.title}</h3>
+          <p>{area.body}</p>
+        </article>
+      ))}
+    </div>
+    <div class="section-actions">
+      <CtaLink href="/volunteer/" variant="secondary">Volunteer</CtaLink>
+      <CtaLink href="/events/" variant="quiet">View Events</CtaLink>
+    </div>
+  </ContentSection>
+
+  <ContentSection
+    eyebrow="Social Activity"
+    title="A Place for Current, Verified Updates"
+    lead="This section now includes the client-provided social profiles and still reserves space for approved event photography."
+    tone="muted"
+  >
+    <div class="social-reserve">
+      {socialPlaceholders.map((item) => (
+        <article class="social-reserve__item">
+          <h3>{item.title}</h3>
+          <p>{item.body}</p>
+          {item.href && (
+            <a href={item.href} target="_blank" rel="noopener noreferrer">
+              Open {item.title}
+            </a>
+          )}
+        </article>
+      ))}
+    </div>
+  </ContentSection>
+
+  <section class="final-cta">
+    <div class="final-cta__inner">
+      <p class="eyebrow">Ready to help</p>
+      <h2>Keep practical grassroots work moving.</h2>
+      <p>
+        Donate today, or step into the volunteer work that keeps local organizing
+        energetic, welcoming, and effective.
+      </p>
+      <div class="hero__actions">
+        <CtaLink href={site.donationUrl} variant="secondary" external>Donate</CtaLink>
+        <CtaLink href="/volunteer/" variant="outline">Volunteer</CtaLink>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

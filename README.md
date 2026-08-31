@@ -95,4 +95,3 @@ Primary donation CTAs link directly to the external donation platform stored in 
 - No synthetic documentary photos.
 - No public deployment in this phase.
 - All provisional figures and legal/compliance language require client, counsel, and provider review as applicable.
-

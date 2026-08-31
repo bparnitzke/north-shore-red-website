@@ -1,0 +1,20 @@
+{
+  "name": "north-shore-red-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.19.0",
+  "scripts": {
+    "dev": "node scripts/astro-command.mjs dev",
+    "build": "node scripts/astro-command.mjs check && node scripts/astro-command.mjs build",
+    "check": "node scripts/astro-command.mjs check",
+    "preview": "node scripts/astro-command.mjs preview"
+  },
+  "dependencies": {
+    "astro": "latest"
+  },
+  "devDependencies": {
+    "@astrojs/check": "latest",
+    "typescript": "^6.0.3"
+  }
+}

@@ -1,0 +1,24 @@
+---
+import PageIntro from "../components/PageIntro.astro";
+import PlaceholderPanel from "../components/PlaceholderPanel.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Privacy Policy"
+  description="Placeholder Privacy Policy route for North Shore Red."
+  noindex={true}
+>
+  <PageIntro
+    eyebrow="Legal Review Required"
+    title="Privacy Policy"
+    lead="This placeholder must be replaced with a North Shore Red-specific policy based on actual data practices before public launch."
+  />
+  <section class="route-section">
+    <PlaceholderPanel
+      title="Policy Draft Pending"
+      body="Do not copy another organization's policy. Confirm what information is collected, why it is collected, where it is stored, who can access it, retention rules, deletion process, analytics, cookies, donation platform behavior, volunteer submissions, and future SMS handling."
+      review="Future policy must address mobile information and SMS opt-in data, including that it will not be sold and counsel/provider-reviewed language about sharing with third parties, affiliates, and operational service providers."
+    />
+  </section>
+</BaseLayout>

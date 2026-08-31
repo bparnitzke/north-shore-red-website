@@ -1,0 +1,32 @@
+---
+import CtaLink from "../components/CtaLink.astro";
+import PageIntro from "../components/PageIntro.astro";
+import PlaceholderPanel from "../components/PlaceholderPanel.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../data/site";
+---
+
+<BaseLayout
+  title="Make a Voting Plan"
+  description="Future voting-plan tool route placeholder for North Shore Red."
+  noindex={true}
+>
+  <PageIntro
+    eyebrow="Future Tool"
+    title="Make a Voting Plan"
+    lead="This route is intentionally nonfunctional in phase one. The future tool will direct Wisconsin voters to official MyVote Wisconsin resources without imitating that government site."
+  />
+  <section class="route-section">
+    <PlaceholderPanel
+      title="Official Wisconsin Election Resource"
+      body="Until user flow, data destination, provider, compliance language, and authorization are settled, this page only links to the official MyVote Wisconsin site."
+      review="The voter must be able to get the appropriate official link without opting in to SMS reminders."
+    >
+      <div class="section-actions">
+        <CtaLink href={site.myVoteUrl} variant="primary" external>
+          Visit MyVote Wisconsin
+        </CtaLink>
+      </div>
+    </PlaceholderPanel>
+  </section>
+</BaseLayout>

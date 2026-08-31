@@ -1,0 +1,17 @@
+---
+export interface Props {
+  eyebrow?: string;
+  title: string;
+  lead: string;
+}
+
+const { eyebrow, title, lead } = Astro.props;
+---
+
+<section class="page-intro">
+  <div class="page-intro__inner">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h1>{title}</h1>
+    <p>{lead}</p>
+  </div>
+</section>

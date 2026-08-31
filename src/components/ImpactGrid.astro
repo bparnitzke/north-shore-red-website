@@ -1,0 +1,15 @@
+---
+import { impactMetrics, impactNotice } from "../data/impact";
+---
+
+<div class="impact-grid">
+  {impactMetrics.map((metric) => (
+    <article class="impact-card">
+      <p class="impact-card__value">{metric.value}</p>
+      <h3>{metric.label}</h3>
+      <p>{metric.detail}</p>
+      <p class="impact-card__verification">{metric.verification}</p>
+    </article>
+  ))}
+</div>
+<p class="verification-note">{impactNotice}</p>

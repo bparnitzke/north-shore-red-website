@@ -1,0 +1,16 @@
+---
+export interface Props {
+  title: string;
+  body: string;
+  review?: string;
+}
+
+const { title, body, review } = Astro.props;
+---
+
+<article class="placeholder-panel">
+  <h2>{title}</h2>
+  <p>{body}</p>
+  {review && <p class="placeholder-panel__review">{review}</p>}
+  <slot />
+</article>

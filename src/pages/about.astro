@@ -1,0 +1,33 @@
+---
+import PageIntro from "../components/PageIntro.astro";
+import PlaceholderPanel from "../components/PlaceholderPanel.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="About"
+  description="Placeholder About page structure for North Shore Red."
+>
+  <PageIntro
+    eyebrow="About"
+    title="About North Shore Red"
+    lead="This route is prepared for client-approved copy about who the organization is, how it formed, and what it does."
+  />
+  <section class="route-section">
+    <PlaceholderPanel
+      title="Who We Are"
+      body="Placeholder for concise, client-approved organizational description."
+      review="Confirm 501(c)(4), governance, volunteer, and public positioning language before launch."
+    />
+    <PlaceholderPanel
+      title="How We Formed"
+      body="Placeholder for a factual, restrained formation history. This topic is intentionally not the homepage theme."
+      review="Legal and leadership review required. Avoid accusatory or unnecessarily internal framing."
+    />
+    <PlaceholderPanel
+      title="What We Do"
+      body="Placeholder for approved descriptions of grassroots work, events, voter outreach, and candidate-support activity."
+      review="Confirm public claims, expenditure descriptions, and any endorsement language before launch."
+    />
+  </section>
+</BaseLayout>

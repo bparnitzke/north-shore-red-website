@@ -1,0 +1,20 @@
+---
+import PageIntro from "../components/PageIntro.astro";
+import PlaceholderPanel from "../components/PlaceholderPanel.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Events" description="North Shore Red events route placeholder.">
+  <PageIntro
+    eyebrow="Events"
+    title="Events"
+    lead="A future events page can publish confirmed gatherings, volunteer shifts, candidate events, and community meetings."
+  />
+  <section class="route-section">
+    <PlaceholderPanel
+      title="Events Calendar Pending"
+      body="No fake events are included in this first phase. Add only confirmed events with approved dates, locations, hosts, descriptions, and registration links."
+      review="Decide whether events will be edited in a data file, Markdown collection, or external calendar before launch."
+    />
+  </section>
+</BaseLayout>
