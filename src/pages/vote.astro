@@ -1,24 +1,17 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import CtaLink from "../components/CtaLink.astro";
+// Alias route reserved for the future voting-plan tool.
+const target = "/make-a-plan/";
 ---
 
-<BaseLayout
-  title="Vote"
-  description="Future voting-plan alias route for North Shore Red."
-  noindex={true}
->
-  <section class="page-intro">
-    <div class="page-intro__inner">
-      <p class="eyebrow">Future Tool</p>
-      <h1>Voting Plan Page Reserved</h1>
-      <p>
-        This alias route is reserved for a future voting-plan tool. The first
-        phase uses the maintained placeholder at Make a Voting Plan.
-      </p>
-      <div class="section-actions">
-        <CtaLink href="/make-a-plan/" variant="primary">Make a Voting Plan</CtaLink>
-      </div>
-    </div>
-  </section>
-</BaseLayout>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <link rel="canonical" href={target} />
+    <title>Make a Voting Plan | North Shore Red</title>
+  </head>
+  <body>
+    <p><a href={target}>Make a voting plan</a>.</p>
+  </body>
+</html>

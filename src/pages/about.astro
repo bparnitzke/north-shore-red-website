@@ -1,33 +1,190 @@
 ---
-import PageIntro from "../components/PageIntro.astro";
-import PlaceholderPanel from "../components/PlaceholderPanel.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import FigureList from "../components/FigureList.astro";
+import { letter, whereWeWork } from "../data/about";
+import { communities, founderPhoto, recordFigures, recordNote, values } from "../data/record";
 ---
 
-<BaseLayout
-  title="About"
-  description="Placeholder About page structure for North Shore Red."
->
-  <PageIntro
-    eyebrow="About"
-    title="About North Shore Red"
-    lead="This route is prepared for client-approved copy about who the organization is, how it formed, and what it does."
-  />
-  <section class="route-section">
-    <PlaceholderPanel
-      title="Who We Are"
-      body="Placeholder for concise, client-approved organizational description."
-      review="Confirm 501(c)(4), governance, volunteer, and public positioning language before launch."
-    />
-    <PlaceholderPanel
-      title="How We Formed"
-      body="Placeholder for a factual, restrained formation history. This topic is intentionally not the homepage theme."
-      review="Legal and leadership review required. Avoid accusatory or unnecessarily internal framing."
-    />
-    <PlaceholderPanel
-      title="What We Do"
-      body="Placeholder for approved descriptions of grassroots work, events, voter outreach, and candidate-support activity."
-      review="Confirm public claims, expenditure descriptions, and any endorsement language before launch."
-    />
+<BaseLayout title="About us" description="Who North Shore Red is, how it formed, and what it stands for.">
+  <section class="band band--hero">
+    <span class="eyebrow" style="padding-bottom: 20px; display: block;">01 — Who we are</span>
+    <h2 style="max-width: 24ch; margin-bottom: 20px;">A small board of committed volunteers, and nobody on payroll.</h2>
+    <p class="lead" style="max-width: 64ch;">
+      North Shore Red is a Wisconsin 501(c)(4) organization promoting conservative principles across the North
+      Shore, Milwaukee County, and at every level of government. We are led entirely by volunteers — which is
+      why 100% of your contribution goes toward helping elect Republicans.
+    </p>
+  </section>
+
+  <section class="band band--ink letter-band">
+    <div class="letter-band__label">
+      <span class="eyebrow" style="padding-bottom: 14px; display:block;">02 — A letter</span>
+      <div class="meta" style="color: var(--meta-on-ink-soft)">From the founding board</div>
+    </div>
+    <div>
+      <p class="letter-band__lead">{letter.lead}</p>
+      {letter.body.map((paragraph) => <p class="prose" style="margin-bottom: 16px; max-width: 66ch;">{paragraph}</p>)}
+      <div class="letter-band__signoff">
+        <span class="letter-band__signature">{letter.signoff}</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="record-band">
+    <div class="record-band__figures">
+      <span class="eyebrow" style="padding-bottom: 18px; display:block;">03 — What we have done</span>
+      <FigureList figures={recordFigures} note={recordNote} />
+    </div>
+    <div class="record-band__photo">
+      <img src={founderPhoto.src} alt={founderPhoto.alt} />
+      <div class="record-band__caption">
+        {founderPhoto.captionName} <span class="meta" style="color: var(--meta-on-ink)">{founderPhoto.captionDate}</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <span class="eyebrow" style="padding-bottom: 20px; display:block;">04 — What we stand for</span>
+    <div class="columns-5 ruled-columns" style="border-top: 1px solid var(--ink); border-bottom: 1px solid var(--rule);">
+      {values.map((value, index) => (
+        <div>
+          <div class="meta" style="color: var(--red); padding-bottom: 10px;">{String(index + 1).padStart(2, "0")}</div>
+          <h4>{value}</h4>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="band">
+    <span class="eyebrow" style="padding-bottom: 20px; display:block;">05 — Where we work</span>
+    <p class="prose" style="margin-bottom: 22px; max-width: 64ch;">{whereWeWork}</p>
+    <div class="community-row">
+      {communities.map((community) => <div>{community}</div>)}
+    </div>
+    <div class="meta" style="border-top: 1px solid var(--rule); padding-top: 14px;">Confirm the community list before launch</div>
+  </section>
+
+  <section class="band columns-2">
+    <div>
+      <span class="eyebrow" style="padding-bottom: 16px; display:block;">06 — Support the work</span>
+      <h3 style="margin-bottom: 12px;">Every penny goes to reaching voters</h3>
+      <p class="prose" style="margin-bottom: 18px;">We have no salaries and no consultants. See exactly what your contribution pays for this cycle.</p>
+      <a class="link-arrow" href="/donate/">Why donate to us →</a>
+    </div>
+    <div>
+      <span class="eyebrow" style="padding-bottom: 16px; display:block;">07 — Join us</span>
+      <h3 style="margin-bottom: 12px;">Volunteer, or just stay in the loop</h3>
+      <p class="prose" style="margin-bottom: 18px;">Sign up to volunteer, join the mailing list, or ask to be added to the invitation list for our annual fundraiser.</p>
+      <a class="link-arrow" href="/contact/">Get in touch →</a>
+    </div>
   </section>
 </BaseLayout>
+
+<style>
+  .letter-band {
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .letter-band__lead {
+    font: 300 22px/1.45 var(--font-body);
+    color: #fff;
+    max-width: 58ch;
+    margin: 0 0 20px;
+  }
+
+  .letter-band__signoff {
+    border-top: 1px solid var(--rule-dark);
+    padding-top: 20px;
+  }
+
+  .letter-band__signature {
+    font: 400 15px/1.5 var(--font-body);
+    color: #a9a294;
+    font-style: italic;
+  }
+
+  @media (max-width: 899.98px) {
+    .letter-band {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+
+  .record-band {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .record-band__figures {
+    padding: 44px 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .record-band__photo {
+    position: relative;
+    overflow: hidden;
+    border-left: 1px solid var(--rule);
+    min-height: 520px;
+  }
+
+  .record-band__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 60% 40%;
+  }
+
+  .record-band__caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(31, 39, 42, 0.86);
+    color: #e9e5dd;
+    padding: 14px 18px;
+    font: 400 14px/1.55 var(--font-body);
+  }
+
+  @media (max-width: 899.98px) {
+    .record-band {
+      grid-template-columns: 1fr;
+    }
+
+    .record-band__figures {
+      padding: 24px 18px;
+    }
+
+    .record-band__photo {
+      border-left: none;
+      border-top: 1px solid var(--rule);
+      min-height: 0;
+      aspect-ratio: 3 / 2;
+    }
+  }
+
+  .community-row {
+    display: flex;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--ink);
+  }
+
+  .community-row > div {
+    padding: 16px 26px;
+    border-right: 1px solid var(--rule);
+    font: 600 17px/1.2 var(--font-heading);
+  }
+
+  .community-row > div:first-child {
+    padding-left: 0;
+  }
+
+  .community-row > div:last-child {
+    border-right: none;
+  }
+</style>

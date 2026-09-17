@@ -1,0 +1,41 @@
+---
+import { primaryNav, site } from "../data/site";
+
+const currentPath = Astro.url.pathname;
+const isActive = (href: string) =>
+  !href.startsWith("http") && !href.includes("#") &&
+  (href === "/" ? currentPath === "/" : currentPath.startsWith(href));
+---
+
+<nav class="rail" aria-label="Primary">
+  <img class="rail__logo" src={site.logo} alt={site.name} width="150" height="150" />
+
+  <div class="rail__tagline" set:html={site.tagline.replace("\n", "<br>")} />
+
+  <div class="rail__nav">
+    {primaryNav.map((item) => (
+      <a
+        href={item.href}
+        target={item.external ? "_blank" : undefined}
+        rel={item.external ? "noopener" : undefined}
+        aria-current={isActive(item.href) ? "page" : undefined}
+      >
+        {item.label}
+        {item.external && <span aria-hidden="true"> ↗</span>}
+      </a>
+    ))}
+  </div>
+
+  <div class="rail__social">
+    <span class="rail__social-label">Follow the day-to-day</span>
+    <a href={site.socialLinks.facebook} target="_blank" rel="noopener">Facebook →</a>
+    <a href={site.socialLinks.instagram} target="_blank" rel="noopener">Instagram →</a>
+    <a href={site.socialLinks.x} target="_blank" rel="noopener">X →</a>
+  </div>
+
+  <div class="rail__actions">
+    <a class="btn btn--primary" href={site.donationUrl} target="_blank" rel="noopener">Donate</a>
+    <a class="btn btn--secondary" href="/contact/?interest=volunteer">Volunteer</a>
+    <p class="rail__legal">{site.noPayNote}</p>
+  </div>
+</nav>

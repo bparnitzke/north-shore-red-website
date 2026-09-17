@@ -1,24 +1,108 @@
 ---
-import PageIntro from "../components/PageIntro.astro";
-import PlaceholderPanel from "../components/PlaceholderPanel.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { effectiveDate, termsClauses } from "../data/legal";
+
+const slugify = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 ---
 
-<BaseLayout
-  title="Terms and Conditions"
-  description="Placeholder Terms and Conditions route for North Shore Red."
-  noindex={true}
->
-  <PageIntro
-    eyebrow="Legal Review Required"
-    title="Terms and Conditions"
-    lead="This placeholder must be replaced with North Shore Red-specific terms before public launch."
-  />
-  <section class="route-section">
-    <PlaceholderPanel
-      title="Terms Draft Pending"
-      body="Confirm website ownership, acceptable use, third-party links, donation-platform disclaimers, intellectual-property language, event registration terms, SMS program terms, opt-out instructions, help instructions, and jurisdiction-specific requirements."
-      review="Future SMS terms must be reviewed by counsel and the messaging provider before use in any production 10DLC registration or public opt-in flow."
-    />
+<BaseLayout title="Terms of Use" description="Terms of use for the North Shore Red website.">
+  <section class="band" style="border-bottom: 1px solid var(--rule); padding-bottom: 32px;">
+    <span class="eyebrow" style="padding-bottom: 18px; display: block;">Legal</span>
+    <h2 style="margin-bottom: 14px;">Terms of Use</h2>
+    <div class="meta" style="text-transform: uppercase; color: #5b6360;">Effective date: {effectiveDate}</div>
+  </section>
+
+  <section class="legal-layout">
+    <nav class="legal-index" aria-label="On this page">
+      <div class="meta" style="padding-bottom: 12px;">On this page</div>
+      {termsClauses.map((clause) => (
+        <a href={`#${slugify(clause.heading)}`}>{clause.heading}</a>
+      ))}
+    </nav>
+
+    <div class="legal-prose">
+      <p class="lead" style="color: #2c3331; margin-bottom: 32px;">
+        Welcome to northshorered.com, the official website of North Shore Red, a 501(c)(4) organization based
+        in Wisconsin. By accessing or using our website, you agree to comply with these Terms of Use.
+      </p>
+
+      {termsClauses.map((clause, index) => (
+        <div class="legal-clause" id={slugify(clause.heading)}>
+          <div class="legal-clause__number">{String(index + 1).padStart(2, "0")}</div>
+          <div>
+            <h3 style="margin-bottom: 10px;">{clause.heading}</h3>
+            <p class="prose" set:html={clause.body} />
+          </div>
+        </div>
+      ))}
+    </div>
   </section>
 </BaseLayout>
+
+<style>
+  .legal-layout {
+    display: grid;
+    grid-template-columns: 236px 1fr;
+    gap: 48px;
+    align-items: start;
+    padding: 40px 56px 44px;
+  }
+
+  .legal-index {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .legal-index a {
+    font-size: 15px;
+    font-weight: 500;
+    padding: 9px 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .legal-index a:last-child {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  @media (min-width: 900px) {
+    .legal-index {
+      position: sticky;
+      top: 24px;
+    }
+  }
+
+  .legal-prose {
+    max-width: 68ch;
+  }
+
+  .legal-clause {
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    gap: 16px;
+    border-top: 1px solid var(--rule);
+    padding-top: 22px;
+    margin-bottom: 30px;
+  }
+
+  .legal-clause:first-of-type {
+    border-top-color: var(--ink);
+  }
+
+  .legal-clause:last-of-type {
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 22px;
+  }
+
+  .legal-clause__number {
+    font: 500 12px/1.5 var(--font-mono);
+    color: var(--red);
+  }
+
+  @media (max-width: 899.98px) {
+    .legal-layout {
+      grid-template-columns: 1fr;
+      padding: 24px 18px;
+      gap: 24px;
+    }
+  }
+</style>

@@ -1,0 +1,19 @@
+---
+export interface Props {
+  figures: Array<{ label: string; value: string }>;
+  note?: string;
+  dark?: boolean;
+}
+
+const { figures, note, dark = false } = Astro.props;
+---
+
+<div class:list={["figure-list", { "figure-list--dark": dark }]}>
+  {figures.map((figure) => (
+    <div class="figure-row">
+      <span>{figure.label}</span>
+      <span class="figure-row__value">{figure.value}</span>
+    </div>
+  ))}
+</div>
+{note && <p class="meta" style="padding-top: 14px">{note}</p>}

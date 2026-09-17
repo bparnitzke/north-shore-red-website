@@ -1,0 +1,36 @@
+---
+import { primaryNav, site } from "../data/site";
+---
+
+<div class="mobile-menu" id="mobile-menu">
+  <div class="mobile-menu__header">
+    <a class="mobile-header__brand" href="/" aria-label={`${site.name} home`}>
+      <img src={site.logo} alt="" width="46" height="46" />
+      <span class="mobile-header__tagline" set:html={site.taglineMobile.replace("\n", "<br>")} />
+    </a>
+    <button type="button" class="mobile-menu__close" data-menu-close>Close ✕</button>
+  </div>
+
+  <nav class="mobile-menu__nav" aria-label="Primary">
+    {primaryNav.map((item) => (
+      <a href={item.href} target={item.external ? "_blank" : undefined} rel={item.external ? "noopener" : undefined}>
+        {item.label}
+        {item.external && <span aria-hidden="true"> ↗</span>}
+      </a>
+    ))}
+  </nav>
+
+  <div class="mobile-menu__social">
+    <span class="mobile-menu__social-label">Follow the day-to-day</span>
+    <div class="mobile-menu__social-links">
+      <a href={site.socialLinks.facebook} target="_blank" rel="noopener">Facebook</a>
+      <a href={site.socialLinks.instagram} target="_blank" rel="noopener">Instagram</a>
+      <a href={site.socialLinks.x} target="_blank" rel="noopener">X</a>
+    </div>
+  </div>
+
+  <div class="mobile-menu__actions">
+    <a class="btn btn--primary" href={site.donationUrl} target="_blank" rel="noopener">Donate</a>
+    <a class="btn btn--on-ink" href="/contact/?interest=volunteer">Volunteer</a>
+  </div>
+</div>

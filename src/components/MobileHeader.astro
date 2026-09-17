@@ -1,0 +1,32 @@
+---
+import { site } from "../data/site";
+---
+
+<div class="mobile-header">
+  <a class="mobile-header__brand" href="/" aria-label={`${site.name} home`}>
+    <img src={site.logo} alt="" width="46" height="46" />
+    <span class="mobile-header__tagline" set:html={site.taglineMobile.replace("\n", "<br>")} />
+  </a>
+  <button type="button" class="mobile-header__menu-btn" data-menu-open aria-expanded="false" aria-controls="mobile-menu">Menu</button>
+</div>
+
+<script>
+  const openButtons = document.querySelectorAll<HTMLButtonElement>("[data-menu-open]");
+  const closeButtons = document.querySelectorAll<HTMLButtonElement>("[data-menu-close]");
+  const menu = document.querySelector<HTMLElement>("#mobile-menu");
+
+  const setOpen = (open: boolean) => {
+    if (menu) menu.dataset.open = String(open);
+    openButtons.forEach((btn) => btn.setAttribute("aria-expanded", String(open)));
+    if (open) {
+      menu?.querySelector<HTMLElement>(".mobile-menu__close")?.focus();
+    }
+  };
+
+  openButtons.forEach((btn) => btn.addEventListener("click", () => setOpen(true)));
+  closeButtons.forEach((btn) => btn.addEventListener("click", () => setOpen(false)));
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && menu?.dataset.open === "true") setOpen(false);
+  });
+</script>

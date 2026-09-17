@@ -1,57 +1,60 @@
-export type TextBlock = {
-  title: string;
-  body: string;
-  href?: string;
+export const letter = {
+  lead:
+    "We founded North Shore Red because we care deeply about the future of the North Shore, Milwaukee, Wisconsin, and our country — and because the grassroots work being done here deserved an organization that could raise and allocate its own funds.",
+  body: [
+    "For years the volunteers now behind this organization were a model of grassroots excellence: an independently funded campaign office in Glendale, the county's yard-sign hub, five major fundraising events, and canvassers who outperformed every other team in Milwaukee County. We intend to carry that legacy forward with more agility, not less.",
+    "Our aim is plain. Defend the values that made America strong — individual liberty, limited government, fiscal responsibility, free markets, and a strong national defense — and help elect principled conservatives who will stand for them. We invite every conservative on the North Shore to join us in this chapter."
+  ],
+  signoff: "— The founding board of North Shore Red"
 };
 
-// TODO(client): Replace future-work placeholders with confirmed plans, dates, and approved language.
-export const futureWorkItems: TextBlock[] = [
-  {
-    title: "Voter outreach priorities",
-    body: "Future campaign-cycle priorities, geography, and timing are pending client confirmation."
-  },
-  {
-    title: "Candidate and event calendar",
-    body: "Confirmed events and candidate-support activity should be added only after the organization approves public details."
-  },
-  {
-    title: "Make a Voting Plan tool",
-    body: "A future page will help Wisconsin voters plan how they prefer to vote and then direct them to official MyVote Wisconsin resources."
-  }
-];
-
-export const volunteerAreas: TextBlock[] = [
+export const volunteerAreas = [
   {
     title: "Canvassing",
-    body: "Help with voter conversations once routes, training, and event details are approved."
+    body: "Voter conversations on approved routes, with training for anyone who has never done it."
   },
   {
     title: "Voter outreach",
-    body: "Support practical voter-contact projects such as postcards, calls, and neighbor-to-neighbor follow-up."
+    body: "Postcards, phone calls and neighbor-to-neighbor follow-up you can do from home."
   },
   {
     title: "Events",
-    body: "Assist with setup, check-in, hospitality, logistics, and making local gatherings welcoming."
+    body: "Setup, check-in, hospitality and logistics that make a gathering welcoming."
   },
   {
     title: "Operations",
-    body: "Put useful behind-the-scenes skills to work on scheduling, supplies, communications, and coordination."
+    body: "Scheduling, supplies, communications and coordination behind the scenes."
   }
 ];
 
-export const socialPlaceholders: TextBlock[] = [
-  {
-    title: "Facebook",
-    body: "Follow current organization updates on the client-provided Facebook profile.",
-    href: "https://www.facebook.com/share/1ZQbJjCNyy/?mibextid=wwXIfr"
-  },
-  {
-    title: "Instagram",
-    body: "Follow approved photos and short updates on the client-provided Instagram profile.",
-    href: "https://www.instagram.com/northshore_red?igsi=eXBscm0xdG1ocDQ5"
-  },
-  {
-    title: "Event photos",
-    body: "Reserved for organization-supplied photography after rights and captions are confirmed."
-  }
-];
+export const nextEvent = {
+  dateLabel: "Save the date",
+  month: "Sep",
+  day: "28",
+  weekday: "Sunday",
+  time: "5:00 pm",
+  name: "The North Shore Red Garden Party",
+  description:
+    "Our one large gathering of the year, keynoted by former Governor Tommy Thompson — the longest-serving governor in Wisconsin history. Tickets start at $100, and seats are limited.",
+  details: [
+    { label: "Tickets from", value: "$100" },
+    { label: "Seating", value: "Limited" },
+    { label: "Keynote", value: "Gov. Thompson" }
+  ],
+  hostNote: "Host location and program details go to invited guests.",
+  footNote:
+    "We hold one or two substantial events a year rather than a weekly calendar, and our gatherings are by invitation. Add your name to the invitation list and a board member will follow up — the day-to-day runs on our social accounts below."
+};
+
+export const followAlong = {
+  updateFrequency: "Updated several times a week",
+  heading: "The day-to-day lives on Facebook, Instagram and X.",
+  body:
+    "Photos from the doors, candidate news, and short updates from the board go up on our accounts as they happen — and they appear here automatically. That is the fastest way to see what North Shore Red is doing this week.",
+  links: [
+    { title: "Facebook", body: "Event notices and longer posts from the board.", href: "facebook" as const },
+    { title: "Instagram", body: "Photos from canvasses, postcard nights and events.", href: "instagram" as const },
+    { title: "X", body: "Short, fast updates and candidate news — @northshore_red.", href: "x" as const }
+  ],
+  note: "All three are live embeds of the real accounts — nothing here is curated or hand-updated. Feed heights are capped and scroll internally."
+};

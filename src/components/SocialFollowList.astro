@@ -1,0 +1,27 @@
+---
+import { site } from "../data/site";
+
+export interface Props {
+  links: Array<{ title: string; body?: string; href: "facebook" | "instagram" | "x" }>;
+}
+
+const { links } = Astro.props;
+
+const urls = {
+  facebook: site.socialLinks.facebook,
+  instagram: site.socialLinks.instagram,
+  x: site.socialLinks.x
+};
+---
+
+<div class="social-follow">
+  {links.map((link) => (
+    <a href={urls[link.href]} target="_blank" rel="noopener">
+      <div>
+        <h4>{link.title}</h4>
+        {link.body && <p class="prose prose--small" style="color: var(--body-muted)">{link.body}</p>}
+      </div>
+      <span class="social-follow__arrow" aria-hidden="true">→</span>
+    </a>
+  ))}
+</div>

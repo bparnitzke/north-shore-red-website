@@ -1,57 +1,144 @@
 ---
-import CtaLink from "../components/CtaLink.astro";
-import PageIntro from "../components/PageIntro.astro";
-import PlaceholderPanel from "../components/PlaceholderPanel.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+  fundingStatus,
+  howItWorks,
+  howItWorksNote,
+  localDecisions,
+  noOverhead,
+  shortVersion,
+  votersWeAreAfter
+} from "../data/whydonate";
 import { site } from "../data/site";
 ---
 
-<BaseLayout
-  title="Why Donate To Us"
-  description="Why donations to North Shore Red support practical grassroots work."
->
-  <PageIntro
-    eyebrow="Why Donate To Us"
-    title="Why Donate To Us"
-    lead="Contributions help keep practical grassroots work moving: voter outreach, events, volunteer coordination, and support for conservative candidates."
-  />
-  <section class="route-section">
-    <PlaceholderPanel
-      title="Ready to Donate?"
-      body="The main Donate buttons throughout the site now go directly to the donation page currently used by North Shore Red, so a ready donor is not forced through this page first."
-      review="Confirm the final platform, account ownership, reporting needs, and disclosure language before launch."
-    >
-      <div class="section-actions">
-        <CtaLink href={site.donationUrl} variant="primary" external>
-          Donate Now
-        </CtaLink>
-      </div>
-    </PlaceholderPanel>
+<BaseLayout title="Why donate to us" description={shortVersion.body}>
+  <section class="band band--hero">
+    <span class="eyebrow" style="padding-bottom: 20px; display: block;">01 — The short version</span>
+    <h2 style="max-width: 26ch; margin-bottom: 20px;">{shortVersion.heading}</h2>
+    <p class="lead" style="max-width: 64ch; margin-bottom: 26px;">{shortVersion.body}</p>
+    <div style="display:flex; gap:14px; flex-wrap: wrap;">
+      <a class="btn btn--primary" href={site.donationUrl} target="_blank" rel="noopener">Donate</a>
+      <a class="btn btn--secondary" href="/contact/?interest=volunteer">Volunteer instead</a>
+    </div>
+  </section>
 
-    <div class="donation-copy-grid">
-      <article class="plain-card">
-        <h2>Volunteer-Led Work</h2>
-        <p>
-          North Shore Red's current public language emphasizes that the
-          organization is led by volunteers and that nobody is paid for their
-          efforts on behalf of North Shore Red.
-        </p>
-      </article>
-      <article class="plain-card">
-        <h2>Candidate Support</h2>
-        <p>
-          Current-site language says that "100% of your contributions are
-          dedicated towards helping elect Republicans." Keep this message, but
-          confirm the exact wording and required legal disclosures before launch.
-        </p>
-      </article>
-      <article class="plain-card">
-        <h2>Disclosure Review</h2>
-        <p>
-          Add counsel-approved fundraising, tax, attribution, campaign-finance,
-          and platform language here before this page is published publicly.
-        </p>
-      </article>
+  <section class="band">
+    <span class="eyebrow" style="padding-bottom: 20px; display:block;">02 — The voters we are after</span>
+    <div class="columns-2" style="align-items: start;">
+      <div>
+        <h3 style="margin-bottom: 14px;">{votersWeAreAfter.heading}</h3>
+        {votersWeAreAfter.body.map((paragraph) => <p class="prose" style="margin-bottom: 14px;">{paragraph}</p>)}
+      </div>
+      <div class="voters-figures">
+        {votersWeAreAfter.figures.map((figure) => (
+          <div class="figure-row" style="border-top: 1px solid var(--ink); border-bottom: 1px solid var(--rule);">
+            <span>{figure.label}</span>
+            <span class="figure-row__value" style="font-size: 30px; letter-spacing: -0.025em;">{figure.value}</span>
+          </div>
+        ))}
+        <p class="meta" style="padding-top: 12px;">{votersWeAreAfter.note}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--ink" style="border-bottom: none;">
+    <span class="eyebrow" style="padding-bottom: 20px; display:block;">03 — Where we are, and what is left</span>
+    <div class="funding-columns">
+      <div class="funding-columns__col">
+        <div class="meta" style="color: var(--meta-on-ink-soft); padding-bottom: 12px;">{fundingStatus.funded.label}</div>
+        <h3 style="margin-bottom: 12px;">{fundingStatus.funded.heading}</h3>
+        <p class="prose">{fundingStatus.funded.body}</p>
+      </div>
+      <div class="funding-columns__col funding-columns__col--last">
+        <div class="meta" style="padding-bottom: 12px;">{fundingStatus.notFunded.label}</div>
+        <h3 style="margin-bottom: 12px;">{fundingStatus.notFunded.heading}</h3>
+        <p class="prose">{fundingStatus.notFunded.body}</p>
+      </div>
+    </div>
+    <div class="funding-cta">
+      <a class="btn btn--primary" href={site.donationUrl} target="_blank" rel="noopener">{fundingStatus.ctaLabel}</a>
+      <span class="prose" style="color: #a9a294; max-width: 52ch;">{fundingStatus.disclosure}</span>
+    </div>
+  </section>
+
+  <section class="band">
+    <span class="eyebrow" style="padding-bottom: 20px; display:block;">04 — How the program works</span>
+    <div class="columns-3 ruled-columns" style="border-top: 1px solid var(--ink); border-bottom: 1px solid var(--rule);">
+      {howItWorks.map((step) => (
+        <div>
+          <div class="meta" style="color: var(--red); padding-bottom: 12px;">{step.step}</div>
+          <h4 style="margin-bottom: 10px;">{step.title}</h4>
+          <p class="prose prose--small" style="color: var(--body-muted)">{step.body}</p>
+        </div>
+      ))}
+    </div>
+    <div class="meta" style="padding-top: 16px;">{howItWorksNote}</div>
+  </section>
+
+  <section class="band columns-2">
+    <div>
+      <span class="eyebrow" style="padding-bottom: 16px; display:block;">05 — No overhead</span>
+      <h3 style="margin-bottom: 12px;">{noOverhead.heading}</h3>
+      <p class="prose">{noOverhead.body}</p>
+    </div>
+    <div>
+      <span class="eyebrow" style="padding-bottom: 16px; display:block;">06 — Local decisions</span>
+      <h3 style="margin-bottom: 12px;">{localDecisions.heading}</h3>
+      <p class="prose">{localDecisions.body}</p>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .voters-figures {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .voters-figures .figure-row {
+    padding: 16px 0;
+  }
+
+  .voters-figures .figure-row + .figure-row {
+    border-top: none;
+  }
+
+  .funding-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--rule-dark-alt);
+  }
+
+  .funding-columns__col {
+    padding: 28px 40px 28px 0;
+    border-right: 1px solid var(--rule-dark-alt);
+  }
+
+  .funding-columns__col--last {
+    padding: 28px 0 28px 40px;
+    border-right: none;
+  }
+
+  .funding-cta {
+    border-top: 1px solid var(--rule-dark-alt);
+    margin-top: 28px;
+    padding-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 899.98px) {
+    .funding-columns {
+      grid-template-columns: 1fr;
+    }
+
+    .funding-columns__col,
+    .funding-columns__col--last {
+      padding: 16px 0;
+      border-right: none;
+    }
+  }
+</style>

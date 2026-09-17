@@ -1,53 +1,46 @@
 ---
-import CtaLink from "./CtaLink.astro";
 import { footerNav, site } from "../data/site";
+
+export interface Props {
+  variant?: "full" | "simple";
+}
+
+const { variant = "simple" } = Astro.props;
 ---
 
-<footer class="site-footer">
-  <div class="site-footer__inner">
-    <div class="footer-brand">
-      <img src={site.logo} alt="" width="946" height="929" />
-      <div>
-        <p class="footer-brand__name">{site.name}</p>
-        <p>Wisconsin-based conservative grassroots organization.</p>
+<footer class="footer">
+  <div class="footer__legal">
+    {site.legalDisclaimer}
+    <br />
+    <span class="footer__copyright">© <span class="js-year">2026</span> {site.name}</span>
+  </div>
+
+  {variant === "full" ? (
+    <div class="footer__links">
+      <div class="footer__link-group">
+        <span class="footer__link-group-label">Site</span>
+        {footerNav.site.map((item) => <a href={item.href}>{item.label}</a>)}
+      </div>
+      <div class="footer__link-group">
+        <span class="footer__link-group-label">Connect</span>
+        {footerNav.connect.map((item) => (
+          <a href={item.href} target={item.external ? "_blank" : undefined} rel={item.external ? "noopener" : undefined}>
+            {item.label}
+          </a>
+        ))}
       </div>
     </div>
-
-    <nav class="footer-links" aria-label="Footer navigation">
-      {footerNav.map((item) => (
-        <a
-          href={item.href}
-          target={item.external ? "_blank" : undefined}
-          rel={item.external ? "noopener noreferrer" : undefined}
-        >
-          {item.label}
-        </a>
-      ))}
-    </nav>
-
-    <div class="footer-contact">
-      <p class="footer-label">Contact</p>
-      <a href={site.contact.href}>{site.contact.label}</a>
+  ) : (
+    <div class="footer__link-group">
+      <a href="/privacy-policy/">Privacy Policy</a>
+      <a href="/terms-and-conditions/">Terms of Use</a>
+      <a href="/contact/">Contact</a>
     </div>
-
-    <div class="footer-social">
-      <p class="footer-label">Social</p>
-      {site.socialLinks.map((link) =>
-        link.href ? (
-          <a href={link.href} target="_blank" rel="noopener noreferrer">
-            {link.label}
-          </a>
-        ) : (
-          <span>{link.label} URL pending client confirmation</span>
-        )
-      )}
-    </div>
-
-    <div class="footer-legal">
-      <p>{site.legalDisclaimer}</p>
-      <p>Copyright 2026 North Shore Red. All rights reserved.</p>
-    </div>
-
-    <CtaLink href={site.donationUrl} variant="secondary" external>Donate</CtaLink>
-  </div>
+  )}
 </footer>
+
+<script>
+  document.querySelectorAll(".js-year").forEach((el) => {
+    el.textContent = String(new Date().getFullYear());
+  });
+</script>

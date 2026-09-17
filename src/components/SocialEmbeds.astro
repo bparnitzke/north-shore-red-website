@@ -1,0 +1,140 @@
+---
+import { site } from "../data/site";
+
+const facebookPageUrl = site.socialLinks.facebook;
+const xHandle = "northshore_red";
+---
+
+<div class="embed-tabs" role="tablist" aria-label="Social feed">
+  <button type="button" role="tab" aria-selected="true" data-tab="facebook">Facebook</button>
+  <button type="button" role="tab" aria-selected="false" data-tab="instagram">Instagram</button>
+  <button type="button" role="tab" aria-selected="false" data-tab="x">X</button>
+</div>
+
+<div class="embed-grid">
+  <div class="embed-frame embed-panel" data-panel="facebook" data-active="true">
+    <div class="embed-frame__header">
+      <span>Facebook</span>
+      <span class="meta" style="padding: 0">Live feed</span>
+    </div>
+    <div class="embed-frame__body" data-embed="facebook" data-page-url={facebookPageUrl}>
+      <div class="embed-frame__fallback">
+        <a href={facebookPageUrl} target="_blank" rel="noopener" class="link-arrow">Open Facebook →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="embed-frame embed-panel" data-panel="instagram">
+    <div class="embed-frame__header">
+      <span>Instagram</span>
+      <span class="meta" style="padding: 0">Live feed</span>
+    </div>
+    <div class="embed-frame__body" data-embed="instagram">
+      <div class="embed-frame__fallback">
+        <a href={site.socialLinks.instagram} target="_blank" rel="noopener" class="link-arrow">Open Instagram →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="embed-frame embed-panel" data-panel="x">
+    <div class="embed-frame__header">
+      <span>X</span>
+      <span class="meta" style="padding: 0">Live feed</span>
+    </div>
+    <div class="embed-frame__body" data-embed="x" data-handle={xHandle}>
+      <div class="embed-frame__fallback">
+        <a href={site.socialLinks.x} target="_blank" rel="noopener" class="link-arrow">Open X →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Instagram has no keyless live-embed option — it needs Basic Display API
+  // (or a third-party embed service) connected to the org's account, per the
+  // handoff notes. Until that's wired up, it always shows the fallback link.
+
+  function loadScriptOnce(src: string, id: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (document.getElementById(id)) {
+        resolve();
+        return;
+      }
+      const script = document.createElement("script");
+      script.id = id;
+      script.src = src;
+      script.async = true;
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error(`Failed to load ${src}`));
+      document.body.appendChild(script);
+    });
+  }
+
+  function mountFacebook() {
+    const body = document.querySelector<HTMLElement>('[data-embed="facebook"]');
+    if (!body) return;
+    const pageUrl = body.dataset.pageUrl;
+    if (!pageUrl) return;
+    const fallback = body.querySelector<HTMLElement>(".embed-frame__fallback");
+
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(
+      pageUrl
+    )}&tabs=timeline&width=340&height=340&small_header=true&hide_cover=true`;
+    iframe.width = "100%";
+    iframe.height = "340";
+    iframe.style.cssText = "border: none; overflow: hidden; display: none;";
+    iframe.loading = "lazy";
+    iframe.setAttribute("allowfullscreen", "true");
+
+    // Keep the fallback link visible until the plugin proves it loaded, and
+    // fall back to it again on a network-level failure (blocked, offline).
+    iframe.onload = () => {
+      iframe.style.display = "block";
+      fallback?.remove();
+    };
+    iframe.onerror = () => {
+      iframe.remove();
+    };
+
+    body.appendChild(iframe);
+  }
+
+  async function mountX() {
+    const body = document.querySelector<HTMLElement>('[data-embed="x"]');
+    if (!body) return;
+    const handle = body.dataset.handle;
+    if (!handle) return;
+
+    try {
+      await loadScriptOnce("https://platform.twitter.com/widgets.js", "twitter-wjs");
+      const wrapper = document.createElement("div");
+      wrapper.style.height = "100%";
+      wrapper.style.overflow = "hidden";
+      const link = document.createElement("a");
+      link.className = "twitter-timeline";
+      link.setAttribute("data-height", "340");
+      link.href = `https://twitter.com/${handle}`;
+      link.textContent = `Tweets by @${handle}`;
+      wrapper.appendChild(link);
+      body.replaceChildren(wrapper);
+      // @ts-expect-error injected by the widgets.js script
+      window.twttr?.widgets?.load(wrapper);
+    } catch {
+      // Leave the fallback link in place.
+    }
+  }
+
+  mountFacebook();
+  mountX();
+
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.embed-tabs [role="tab"]');
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      tabs.forEach((t) => t.setAttribute("aria-selected", String(t === tab)));
+      document.querySelectorAll<HTMLElement>(".embed-panel").forEach((panel) => {
+        panel.dataset.active = String(panel.dataset.panel === tab.dataset.tab);
+      });
+    });
+  });
+</script>

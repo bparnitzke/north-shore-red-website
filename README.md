@@ -1,81 +1,94 @@
 # North Shore Red Website
 
-Initial Astro static-site prototype for North Shore Red, a Wisconsin-based 501(c)(4) conservative grassroots organization.
-
-This first phase builds the maintainable marketing-site foundation only. It does not deploy publicly, collect personal information, submit forms, connect to a database, perform voter lookup, or send SMS messages.
+Astro static site for North Shore Red, a Wisconsin-based 501(c)(4) conservative grassroots
+organization. Built to "The Civic Ledger" design system from the Claude Design handoff
+(persistent left rail on desktop, numbered ruled sections, permanent Donate).
 
 ## Tech Stack
 
 - Astro with static output.
 - TypeScript.
-- Reusable Astro components.
-- Plain CSS design tokens in `src/styles/global.css`.
+- Reusable Astro components, page-scoped CSS for bespoke section layouts.
+- Design tokens and shared chrome (rail, mobile menu, buttons, forms) in `src/styles/global.css`.
 - Editable content in `src/data`.
-- Static assets in `public/assets`.
-- No database.
-- No client-side framework.
+- Static assets in `public/assets`, client photo in `public/uploads`.
+- `public/contact.php`: the contact form's submission handler (see below).
 
 ## Routes
 
-- `/`
-- `/about/`
-- `/events/`
-- `/volunteer/`
-- `/donate/` as "Why Donate To Us"
-- `/make-a-plan/`
-- `/vote/`
-- `/privacy-policy/`
-- `/terms-and-conditions/`
-- custom `404`
+- `/` — homepage
+- `/about/` — About us (also the destination for "Read the full story")
+- `/donate/` — Why donate to us
+- `/contact/` — the site's single conversion funnel (volunteer, mailing list, fundraiser
+  invitation list, or a general message); supports `?interest=volunteer` and `?interest=event`
+  to pre-check the matching box
+- `/privacy-policy/`, `/terms-and-conditions/` — legal copy carried verbatim from the live site
+- `/make-a-plan/`, `/vote/` — reserved for the future voting-plan tool (see
+  `docs/future-voting-tool.md`)
+- `/events/`, `/volunteer/` — thin redirects (`/#next-event`, `/contact/?interest=volunteer`);
+  there is no standalone events or volunteer page by design
 
 ## Setup
 
-Install dependencies:
-
 ```bash
 pnpm install
+pnpm dev       # local development
+pnpm build     # type-check + build to dist/
+pnpm preview   # preview the static build
 ```
 
-Start local development:
+## Contact form
 
-```bash
-pnpm dev
-```
+The form posts as JSON-expecting `fetch` to `/contact.php`, which Astro copies into `dist/`
+unchanged. On cPanel, upload the built `dist/` contents to `public_html` and PHP's `mail()`
+handles delivery — no build step or environment variables needed on the host. It:
 
-Run checks and build:
+- Emails both `brian@orbiterstrategies.com` and `NorthShoreRedFund@gmail.com`, with `Reply-To`
+  set to the submitter and the checked interests in the subject/body.
+- Rejects the submission if the honeypot field is filled or if it arrives less than ~2 seconds
+  after the form rendered (both silent to the caller, so bots don't learn why they failed).
+- Validates name, email, and comments server-side in addition to the client-side checks.
+- Redirects a plain `GET` (e.g., an old bookmark to the previous site's `contact.php`) to
+  `/contact/` instead of returning an empty API response.
 
-```bash
-pnpm build
-```
+A host without PHP/`mail()` configured will need a different handler — swap the `fetch` target
+in `src/components/ContactForm.astro` if so.
 
-Preview the static build:
+## Editing content
 
-```bash
-pnpm preview
-```
+- Site-wide nav, social links, donation/MyVote/voting-plan URLs: `src/data/site.ts`
+- Homepage copy (letter, record figures, event, follow-along): `src/data/homepage.ts`,
+  `src/data/record.ts`
+- About page copy: `src/data/about.ts`
+- Why donate page copy: `src/data/whydonate.ts`
+- Contact form interest options and success-state copy: `src/data/contact.ts`
+- Privacy/Terms clauses: `src/data/legal.ts`
+- Design tokens (colors, type scale, spacing) and shared chrome: `src/styles/global.css`
 
-## Cloudflare Pages
+## Still needed from the client
 
-This project is portable static output and can be deployed through a client-owned Cloudflare Pages account later.
+See `docs/content-confirmation-checklist.md`, plus, per the design handoff:
 
-Recommended Cloudflare Pages settings:
+1. The voting-plan tool URL (`site.votingPlanUrl` in `src/data/site.ts` — currently `null`,
+   so the nav and CTAs fall back to the internal `/make-a-plan/` page until it's set).
+2. Garden Party venue and program details.
+3. Photography for every placeholder.
+4. Verification of all figures in `src/data/record.ts` and `src/data/whydonate.ts`.
+5. Final fundraising disclosure and disclaimer language, reviewed by counsel.
+6. Instagram live-feed integration — it needs the org's account connected via the Basic
+   Display API or an embed service; until then `SocialEmbeds.astro` shows the plain account
+   link. Facebook (Page Plugin) and X (`platform.twitter.com/widgets.js`) are wired up and
+   fall back to the plain link if the embed fails to load.
+7. A social share image and a favicon beyond the placeholder `public/favicon.svg`.
 
-- Build command: `pnpm build`
-- Output directory: `dist`
-- Framework preset: Astro
-- Node version: use an active LTS supported by Cloudflare Pages
-- Environment variables: none for phase one
+## Deployment (cPanel)
 
-Do not connect a production domain or publish publicly until content, assets, legal language, donation links, privacy/terms, and future form requirements are approved.
-
-## Editing Content
-
-- Impact numbers: `src/data/impact.ts`
-- Header, footer, donation URL, contact, and social profile links: `src/data/site.ts`
-- Homepage future work, volunteer areas, and social section content: `src/data/homepage.ts`
-- Global design tokens and responsive rules: `src/styles/global.css`
-
-Primary donation CTAs link directly to the external donation platform stored in `src/data/site.ts`. The `/donate/` route remains available as "Why Donate To Us" for supporting copy, disclosures, and future SEO, but it is not a required intermediate step for ready donors.
+- `pnpm build` produces static output in `dist/`; upload its contents to `public_html`.
+  `public/contact.php` ships through unchanged.
+- cPanel's Git Version Control can clone this repo on the server so a deploy is a
+  `git pull` + `pnpm build` rather than a manual file upload.
+- Use cPanel's Directory Privacy (htpasswd) for a password-protected staging URL, and set
+  `noindex` on any non-production page (see `BaseLayout`'s `noindex` prop).
 
 ## Documentation
 
@@ -84,14 +97,3 @@ Primary donation CTAs link directly to the external donation platform stored in 
 - Content confirmation checklist: `docs/content-confirmation-checklist.md`
 - Future voting tool architecture: `docs/future-voting-tool.md`
 - Future SMS/10DLC checklist: `docs/sms-10dlc-checklist.md`
-
-## First-Phase Guardrails
-
-- No live form submissions.
-- No real personal-information collection.
-- No production database.
-- No SMS sending.
-- No MyVote scraping or impersonation.
-- No synthetic documentary photos.
-- No public deployment in this phase.
-- All provisional figures and legal/compliance language require client, counsel, and provider review as applicable.

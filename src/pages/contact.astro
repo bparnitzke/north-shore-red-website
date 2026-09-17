@@ -1,0 +1,78 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ContactForm from "../components/ContactForm.astro";
+import ContactSuccess from "../components/ContactSuccess.astro";
+import { site } from "../data/site";
+---
+
+<BaseLayout title="Contact us" description="Volunteer, join our mailing list, ask about our fundraiser, or just send a note.">
+  <section class="band band--hero">
+    <span class="eyebrow" style="padding-bottom: 18px; display: block;">Contact</span>
+    <h2 style="max-width: 24ch; margin-bottom: 16px;">Tell us what's on your mind.</h2>
+    <p class="lead" style="max-width: 60ch;">
+      Volunteer with us, join our mailing list, ask to be added to the invitation list for our fundraiser, or
+      just send a note. A volunteer reads every message — we are not staffed full time, so give us a few days.
+    </p>
+  </section>
+
+  <section class="contact-layout" id="contact-form-section">
+    <div>
+      <ContactForm />
+    </div>
+
+    <aside class="contact-aside">
+      <div class="meta" style="padding-bottom: 14px;">Other ways to reach us</div>
+      <div class="contact-aside__item" style="border-top: 1px solid var(--ink);">
+        <h4 style="margin-bottom: 5px;">Privacy questions</h4>
+        <a class="prose" href="mailto:privacy@northshorered.com" style="color: var(--red); border-bottom: 1px solid #e8b9bd;">privacy@northshorered.com</a>
+      </div>
+      <div class="contact-aside__item">
+        <h4 style="margin-bottom: 5px;">Terms questions</h4>
+        <a class="prose" href="mailto:terms@northshorered.com" style="color: var(--red); border-bottom: 1px solid #e8b9bd;">terms@northshorered.com</a>
+      </div>
+      <div class="contact-aside__item" style="border-bottom: 1px solid var(--rule);">
+        <h4 style="margin-bottom: 5px;">Social</h4>
+        <div style="display:flex; flex-direction: column; gap: 5px;">
+          <a class="prose" style="color: var(--red);" href={site.socialLinks.facebook} target="_blank" rel="noopener">Facebook</a>
+          <a class="prose" style="color: var(--red);" href={site.socialLinks.instagram} target="_blank" rel="noopener">Instagram</a>
+          <a class="prose" style="color: var(--red);" href={site.socialLinks.x} target="_blank" rel="noopener">X — @northshore_red</a>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <ContactSuccess />
+</BaseLayout>
+
+<style>
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 56px;
+    align-items: start;
+    padding: 40px 56px 44px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .contact-aside {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .contact-aside__item {
+    padding: 16px 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  @media (max-width: 899.98px) {
+    .contact-layout {
+      grid-template-columns: 1fr;
+      padding: 24px 18px;
+      gap: 24px;
+    }
+
+    .contact-aside {
+      display: none;
+    }
+  }
+</style>

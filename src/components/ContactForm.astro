@@ -1,0 +1,189 @@
+---
+import { interestOptions } from "../data/contact";
+---
+
+<form class="contact-form" id="contact-form" novalidate>
+  <div class="marker-row">
+    <span class="eyebrow">Send a message</span>
+  </div>
+
+  <div aria-hidden="true" style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;">
+    <label>
+      Leave this field empty
+      <input type="text" name="honeypot" tabindex="-1" autocomplete="off" />
+    </label>
+  </div>
+  <input type="hidden" name="rendered_at" value="" />
+
+  <div class="interest-panel">
+    <div class="interest-panel__title">What would you like to do?</div>
+    <div class="interest-panel__hint">Check as many as apply, or none — a general message is welcome too.</div>
+    {interestOptions.map((option) => (
+      <label class="interest-option" for={`interest-${option.key}`}>
+        <input id={`interest-${option.key}`} type="checkbox" name="interest[]" value={option.key} />
+        <span>
+          <strong>{option.label}</strong>
+          <span class="desc">{option.description}</span>
+        </span>
+      </label>
+    ))}
+  </div>
+
+  <div class="field" style="margin-top: 22px">
+    <label for="c-name">Name <span class="field-required">*</span></label>
+    <input id="c-name" name="name" type="text" required autocomplete="name" />
+    <p class="field__error">Please enter your name.</p>
+  </div>
+
+  <div class="field" style="margin-top: 22px">
+    <label for="c-address">Address</label>
+    <input id="c-address" name="address" type="text" autocomplete="address-line1" />
+  </div>
+
+  <div class="field" style="margin-top: 22px">
+    <label for="c-address2">Address 2</label>
+    <input id="c-address2" name="address2" type="text" autocomplete="address-line2" />
+  </div>
+
+  <div class="field-row-3" style="margin-top: 22px">
+    <div class="field">
+      <label for="c-city">City</label>
+      <input id="c-city" name="city" type="text" autocomplete="address-level2" />
+    </div>
+    <div class="field">
+      <label for="c-state">State</label>
+      <input id="c-state" name="state" type="text" value="WI" autocomplete="address-level1" />
+    </div>
+    <div class="field">
+      <label for="c-zip">Zip</label>
+      <input id="c-zip" name="zip" type="text" autocomplete="postal-code" />
+    </div>
+  </div>
+
+  <div class="field" style="margin-top: 22px">
+    <label for="c-phone">Phone</label>
+    <input id="c-phone" name="phone" type="tel" autocomplete="tel" />
+  </div>
+
+  <div class="sms-panel" style="margin-top: 22px">
+    <label for="c-sms">
+      <input id="c-sms" name="sms_consent" type="checkbox" />
+      <span>I authorize North Shore Red to send me SMS text messages.</span>
+    </label>
+    <p>
+      By checking this box and providing your phone number, you consent to receive recurring text messages from
+      North Shore Red at the number provided, including messages sent by autodialer. Consent is not a condition of
+      any purchase or donation. Msg &amp; data rates may apply. Msg frequency varies. Reply STOP to unsubscribe at
+      any time. Reply HELP for help. See our <a href="/privacy-policy/">Privacy Policy</a> and
+      <a href="/terms-and-conditions/">Terms of Use</a>.
+    </p>
+  </div>
+
+  <div class="field" style="margin-top: 22px">
+    <label for="c-email">Email <span class="field-required">*</span></label>
+    <input id="c-email" name="email" type="email" required autocomplete="email" />
+    <p class="field__error">Please enter a valid email address.</p>
+  </div>
+
+  <div class="field" style="margin-top: 22px">
+    <label for="c-comments">Comments <span class="field-required">*</span></label>
+    <textarea id="c-comments" name="comments" rows="6" required></textarea>
+    <p class="field__error">Please add a short message.</p>
+  </div>
+
+  <div class="form-submit-row">
+    <button type="submit" class="btn btn--primary">Submit</button>
+    <span class="form-note">Fields marked <span class="field-required">*</span> are required. We never sell or rent your information.</span>
+  </div>
+
+  <p class="form-status" role="alert" data-form-status></p>
+</form>
+
+<script>
+  import { interestParamMap } from "../data/contact";
+
+  const form = document.querySelector<HTMLFormElement>("#contact-form");
+  if (form) {
+    const renderedAt = form.querySelector<HTMLInputElement>('[name="rendered_at"]');
+    if (renderedAt) renderedAt.value = String(Date.now());
+
+    const params = new URLSearchParams(window.location.search);
+    const interestParam = params.get("interest");
+    if (interestParam && interestParam in interestParamMap) {
+      const key = interestParamMap[interestParam];
+      const checkbox = form.querySelector<HTMLInputElement>(`#interest-${key}`);
+      if (checkbox) checkbox.checked = true;
+    }
+
+    const status = form.querySelector<HTMLElement>("[data-form-status]");
+
+    const setFieldValid = (field: HTMLElement, valid: boolean) => {
+      const wrapper = field.closest(".field");
+      wrapper?.classList.toggle("field--invalid", !valid);
+    };
+
+    const validate = () => {
+      let valid = true;
+      const required = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>("[required]");
+      required.forEach((field) => {
+        const fieldValid = field.checkValidity();
+        setFieldValid(field, fieldValid);
+        if (!fieldValid) valid = false;
+      });
+      return valid;
+    };
+
+    form.querySelectorAll("[required]").forEach((field) => {
+      field.addEventListener("input", () => setFieldValid(field as HTMLElement, (field as HTMLInputElement).checkValidity()));
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (status) {
+        status.dataset.visible = "false";
+        status.textContent = "";
+      }
+
+      // Honeypot: a filled hidden field means a bot filled the form.
+      const honeypot = form.querySelector<HTMLInputElement>('[name="honeypot"]');
+      if (honeypot?.value) return;
+
+      if (!validate()) {
+        if (status) {
+          status.textContent = "Please fix the highlighted fields above.";
+          status.dataset.visible = "true";
+        }
+        return;
+      }
+
+      const submitButton = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      submitButton?.setAttribute("disabled", "true");
+
+      try {
+        const formData = new FormData(form);
+        const response = await fetch("/contact.php", {
+          method: "POST",
+          body: formData,
+          headers: { Accept: "application/json" }
+        });
+        const result = await response.json().catch(() => ({ ok: false }));
+
+        if (response.ok && result.ok) {
+          form.dataset.submitted = "true";
+          document.dispatchEvent(new CustomEvent("contact:success"));
+        } else if (status) {
+          status.textContent =
+            result.message || "Something went wrong sending your message. Please try again in a moment.";
+          status.dataset.visible = "true";
+        }
+      } catch {
+        if (status) {
+          status.textContent = "We could not reach the server. Please check your connection and try again.";
+          status.dataset.visible = "true";
+        }
+      } finally {
+        submitButton?.removeAttribute("disabled");
+      }
+    });
+  }
+</script>

@@ -1,0 +1,54 @@
+---
+import SocialFollowList from "./SocialFollowList.astro";
+import { successDonateCopy, successSocialCopy } from "../data/contact";
+import { site } from "../data/site";
+---
+
+<div class="success-panel" id="contact-success">
+  <div class="band" style="border-bottom: 1px solid var(--rule)">
+    <div class="marker-row" style="padding-bottom: 22px">
+      <span style="display:flex; align-items:center; gap:14px">
+        <span style="width:34px;height:34px;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font:700 18px/1 var(--font-heading);" aria-hidden="true">✓</span>
+        <span class="eyebrow">Message received</span>
+      </span>
+    </div>
+    <h2 style="max-width: 26ch; margin-bottom: 18px;">Thank you — a volunteer will be in touch.</h2>
+    <p class="lead">We read every message, and a member of the board follows up personally. We are not staffed full time, so please give us a few days.</p>
+  </div>
+
+  <div class="band">
+    <span class="eyebrow" style="padding-bottom: 16px; display:block;">While you are here</span>
+    <h3 style="max-width: 30ch; margin-bottom: 10px;">{successSocialCopy.heading}</h3>
+    <p class="prose" style="margin-bottom: 26px; max-width: 62ch;">{successSocialCopy.body}</p>
+    <SocialFollowList
+      links={[
+        { title: "Facebook", href: "facebook" },
+        { title: "Instagram", href: "instagram" },
+        { title: "X", href: "x" }
+      ]}
+    />
+  </div>
+
+  <div class="band band--paper-alt" style="display:flex; justify-content: space-between; align-items:center; gap: 44px; flex-wrap: wrap;">
+    <div>
+      <h3 style="margin-bottom: 8px;">{successDonateCopy.heading}</h3>
+      <p class="prose" style="max-width: 60ch;">{successDonateCopy.body}</p>
+    </div>
+    <a class="btn btn--primary" href={site.donationUrl} target="_blank" rel="noopener" style="white-space: nowrap;">Donate</a>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("contact:success", () => {
+    const formSection = document.querySelector<HTMLElement>("#contact-form-section");
+    if (formSection) formSection.style.display = "none";
+
+    const panel = document.querySelector<HTMLElement>("#contact-success");
+    if (panel) {
+      panel.dataset.visible = "true";
+      panel.scrollIntoView({ behavior: "smooth", block: "start" });
+      panel.setAttribute("tabindex", "-1");
+      panel.focus();
+    }
+  });
+</script>

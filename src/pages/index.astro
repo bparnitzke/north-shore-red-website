@@ -1,167 +1,292 @@
 ---
-import ContentSection from "../components/ContentSection.astro";
-import CtaLink from "../components/CtaLink.astro";
-import ImpactGrid from "../components/ImpactGrid.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import {
-  futureWorkItems,
-  socialPlaceholders,
-  volunteerAreas
-} from "../data/homepage";
+import FigureList from "../components/FigureList.astro";
+import SocialEmbeds from "../components/SocialEmbeds.astro";
+import SocialFollowList from "../components/SocialFollowList.astro";
+import { followAlong, letter, nextEvent, volunteerAreas } from "../data/homepage";
+import { founderPhoto, recordFigures, recordNote } from "../data/record";
 import { site } from "../data/site";
 ---
 
 <BaseLayout
   title="North Shore Red"
-  description="A redesigned first-phase homepage for North Shore Red, focused on donations, volunteering, practical grassroots work, and future voter-planning architecture."
+  description={site.description}
+  footerVariant="full"
 >
-  <section class="hero">
-    <div class="hero__inner">
-      <div class="hero__copy">
-        <p class="eyebrow">Wisconsin grassroots action</p>
-        <h1>Organized neighbors. Practical conservative results.</h1>
-        <p class="hero__lead">
-          North Shore Red helps Wisconsin conservatives turn local energy into
-          useful grassroots work: showing up, supporting candidates, and keeping
-          voters engaged across the North Shore and beyond.
-        </p>
-        <div class="hero__actions" aria-label="Primary actions">
-          <CtaLink href={site.donationUrl} variant="primary" external>Donate</CtaLink>
-          <CtaLink href="/volunteer/" variant="outline">Volunteer</CtaLink>
-        </div>
-        <p class="legal-note">
-          Fundraising disclosure placeholder. Counsel-approved language required
-          before launch.
-        </p>
-      </div>
-
-      <aside class="hero__media" aria-label="Future organization photograph placeholder">
-        <div class="photo-placeholder">
-          <img src={site.logo} alt="North Shore Red logo" width="946" height="929" />
-          <div>
-            <p class="photo-placeholder__title">Organization photo pending</p>
-            <p>
-              Replace with a verified, organization-supplied event or volunteer
-              photograph after rights and captions are confirmed.
-            </p>
-          </div>
-        </div>
-      </aside>
+  <section class="band band--hero">
+    <span class="eyebrow" style="padding-bottom: 20px; display: block;">01 — Who we are</span>
+    <h2 style="max-width: 22ch; margin-bottom: 20px;">A small board of committed volunteers, and nobody on payroll.</h2>
+    <p class="lead" style="margin-bottom: 24px;">
+      North Shore Red is a Wisconsin 501(c)(4) organization promoting conservative principles across the North
+      Shore, Milwaukee County, and at every level of government. We are led entirely by volunteers — which is
+      why 100% of your contribution goes toward helping elect conservatives.
+    </p>
+    <div style="display:flex; gap:14px; flex-wrap: wrap;">
+      <a class="btn btn--primary" href={site.donationUrl} target="_blank" rel="noopener">Donate</a>
+      <a class="btn btn--secondary" href="/contact/?interest=volunteer">Volunteer with us</a>
     </div>
   </section>
 
-  <ContentSection
-    eyebrow="Impact"
-    title="A Record of Showing Up"
-    lead="These figures come from the existing public site and are intentionally stored in one editable data file for verification before launch."
-    tone="light"
-  >
-    <ImpactGrid />
-  </ContentSection>
-
-  <ContentSection
-    eyebrow="Why Support North Shore Red"
-    title="Fund Work People Can See"
-    lead="Contributions should connect directly to tangible grassroots work. This first-phase copy avoids claims that still need client, counsel, or reporting confirmation."
-    tone="muted"
-  >
-    <div class="split-copy">
-      <div>
-        <p>
-          North Shore Red is being positioned around practical activity: voter
-          outreach, events, volunteer coordination, and candidate support that
-          can be planned, measured, and improved.
-        </p>
-        <p>
-          The donation path remains the primary call to action because the
-          organization needs durable support to keep that work moving.
-        </p>
+  <section class="band band--ink letter-band">
+    <div class="letter-band__label">
+      <span class="eyebrow" style="padding-bottom: 14px; display:block;">02 — A letter</span>
+      <div class="meta" style="color: var(--meta-on-ink-soft)">From the founding board</div>
+    </div>
+    <div>
+      <p class="letter-band__lead">{letter.lead}</p>
+      {letter.body.map((paragraph) => <p class="prose" style="margin-bottom: 16px; max-width: 66ch;">{paragraph}</p>)}
+      <div class="letter-band__signoff">
+        <span class="letter-band__signature">{letter.signoff}</span>
+        <a class="btn btn--on-ink" href="/about/" style="margin-left: auto; white-space: nowrap;">Read the full story</a>
       </div>
-      <aside class="review-box">
-        <h3>Disclosure Placeholder</h3>
-        <p>
-          Counsel-approved fundraising, tax, campaign-finance, and attribution
-          language must be added before launch. Do not treat prototype copy as
-          legal guidance.
-        </p>
-        <div class="section-actions">
-          <CtaLink href={site.donationUrl} variant="secondary" external>
-            Donate
-          </CtaLink>
-        </div>
-      </aside>
     </div>
-  </ContentSection>
+  </section>
 
-  <ContentSection
-    eyebrow="Future Work"
-    title="Build on What Has Already Worked"
-    lead="The site is structured so confirmed plans can be added without redesigning the page."
-    tone="light"
-  >
-    <div class="three-column">
-      {futureWorkItems.map((item) => (
-        <article class="plain-card">
-          <h3>{item.title}</h3>
-          <p>{item.body}</p>
-        </article>
-      ))}
+  <section class="record-band">
+    <div class="record-band__photo">
+      <img src={founderPhoto.src} alt={founderPhoto.alt} />
+      <div class="record-band__caption">
+        {founderPhoto.captionName} <span class="meta" style="color: var(--meta-on-ink)">{founderPhoto.captionDate}</span>
+      </div>
     </div>
-  </ContentSection>
+    <div class="record-band__figures">
+      <span class="eyebrow" style="padding-bottom: 18px; display:block;">03 — The record</span>
+      <FigureList figures={recordFigures} note={recordNote} />
+    </div>
+  </section>
 
-  <ContentSection
-    eyebrow="Volunteer"
-    title="There Is Useful Work for More Hands"
-    lead="People can help in visible and behind-the-scenes ways, without requiring every supporter to participate in politics the same way."
-    tone="dark"
-  >
-    <div class="volunteer-grid">
+  <section class="band">
+    <span class="eyebrow" style="padding-bottom: 20px; display:block;">04 — Where we need people</span>
+    <div class="columns-4 ruled-columns">
       {volunteerAreas.map((area) => (
-        <article>
-          <h3>{area.title}</h3>
-          <p>{area.body}</p>
-        </article>
+        <div>
+          <h4 style="margin-bottom: 8px;">{area.title}</h4>
+          <p class="prose prose--small" style="color: var(--body-muted)">{area.body}</p>
+        </div>
       ))}
     </div>
-    <div class="section-actions">
-      <CtaLink href="/volunteer/" variant="secondary">Volunteer</CtaLink>
-      <CtaLink href="/events/" variant="quiet">View Events</CtaLink>
-    </div>
-  </ContentSection>
+    <a class="btn btn--primary" href="/contact/?interest=volunteer" style="display:inline-block; margin-top:24px;">Tell us where you fit</a>
+  </section>
 
-  <ContentSection
-    eyebrow="Social Activity"
-    title="A Place for Current, Verified Updates"
-    lead="This section now includes the client-provided social profiles and still reserves space for approved event photography."
-    tone="muted"
-  >
-    <div class="social-reserve">
-      {socialPlaceholders.map((item) => (
-        <article class="social-reserve__item">
-          <h3>{item.title}</h3>
-          <p>{item.body}</p>
-          {item.href && (
-            <a href={item.href} target="_blank" rel="noopener noreferrer">
-              Open {item.title}
-            </a>
-          )}
-        </article>
-      ))}
+  <section class="band band--paper-alt" id="next-event">
+    <div class="marker-row">
+      <span class="eyebrow">05 — Our next event</span>
     </div>
-  </ContentSection>
-
-  <section class="final-cta">
-    <div class="final-cta__inner">
-      <p class="eyebrow">Ready to help</p>
-      <h2>Keep practical grassroots work moving.</h2>
-      <p>
-        Donate today, or step into the volunteer work that keeps local organizing
-        energetic, welcoming, and effective.
-      </p>
-      <div class="hero__actions">
-        <CtaLink href={site.donationUrl} variant="secondary" external>Donate</CtaLink>
-        <CtaLink href="/volunteer/" variant="outline">Volunteer</CtaLink>
+    <div class="event-spotlight">
+      <div class="event-spotlight__date">
+        <div class="meta" style="padding-bottom: 8px;">{nextEvent.dateLabel}</div>
+        <div class="event-spotlight__day">{nextEvent.month}<br />{nextEvent.day}</div>
+        <div class="event-spotlight__time">{nextEvent.weekday}<br />{nextEvent.time}</div>
       </div>
+      <div class="event-spotlight__body">
+        <h3 style="margin-bottom: 10px;">{nextEvent.name}</h3>
+        <p class="prose" style="margin-bottom: 14px; max-width: 56ch;">{nextEvent.description}</p>
+        <div class="event-spotlight__details">
+          {nextEvent.details.map((detail) => (
+            <div>
+              <div class="meta" style="padding-bottom: 5px;">{detail.label}</div>
+              <div class="event-spotlight__detail-value">{detail.value}</div>
+            </div>
+          ))}
+        </div>
+        <div class="meta" style="padding-top: 14px;">{nextEvent.hostNote}</div>
+      </div>
+      <div class="event-spotlight__cta">
+        <a class="btn btn--primary" href="/contact/?interest=event">Join the invitation list</a>
+        <p class="prose prose--small" style="color: #5b6360;">Invitations go out to people on the list. Adding your name is the first step, not a ticket purchase.</p>
+      </div>
+    </div>
+    <p class="prose prose--small" style="color: #5b6360; max-width: 70ch; margin-top: 18px;">{nextEvent.footNote}</p>
+  </section>
+
+  <section class="band">
+    <div class="marker-row" style="padding-bottom: 6px;">
+      <span class="eyebrow">06 — Follow along</span>
+      <span class="meta">{followAlong.updateFrequency}</span>
+    </div>
+    <h3 style="margin-bottom: 8px;">{followAlong.heading}</h3>
+    <p class="prose" style="margin-bottom: 26px; max-width: 64ch;">{followAlong.body}</p>
+    <SocialFollowList links={followAlong.links} />
+    <SocialEmbeds />
+    <p class="meta" style="padding-top: 12px;">{followAlong.note}</p>
+  </section>
+
+  <section class="band columns-2">
+    <div>
+      <span class="eyebrow" style="padding-bottom: 16px; display:block;">07 — Voting</span>
+      <h3 style="margin-bottom: 12px;">Make a voting plan</h3>
+      <p class="prose" style="margin-bottom: 18px;">
+        Pick how you want to vote — absentee, early in person, or on election day — and we hand you off to
+        MyVote Wisconsin, the state's official system, to register, request a ballot or find your polling place.
+      </p>
+      <a class="link-arrow" href={site.votingPlanUrl ?? "/make-a-plan/"} target={site.votingPlanUrl ? "_blank" : undefined} rel={site.votingPlanUrl ? "noopener" : undefined}>Start your plan →</a>
+    </div>
+    <div>
+      <span class="eyebrow" style="padding-bottom: 16px; display:block;">08 — Why donate to us</span>
+      <h3 style="margin-bottom: 12px;">No salaries, no consultants</h3>
+      <p class="prose" style="margin-bottom: 18px;">
+        Nobody is paid for their efforts on behalf of North Shore Red. Contributions buy postcards, printing,
+        yard signs, room rentals and direct support for conservative candidates — allocated by volunteers who
+        live in these villages.
+      </p>
+      <a class="link-arrow" href="/donate/">Read where money goes →</a>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  .letter-band {
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .letter-band__lead {
+    font: 300 22px/1.45 var(--font-body);
+    color: #fff;
+    max-width: 58ch;
+    margin: 0 0 20px;
+  }
+
+  .letter-band__signoff {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-top: 1px solid var(--rule-dark);
+    padding-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .letter-band__signature {
+    font: 400 15px/1.5 var(--font-body);
+    color: #a9a294;
+    font-style: italic;
+  }
+
+  @media (max-width: 899.98px) {
+    .letter-band {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+
+  .record-band {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .record-band__photo {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-right: 1px solid var(--rule);
+  }
+
+  .record-band__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 60% 40%;
+  }
+
+  .record-band__caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(31, 39, 42, 0.86);
+    color: #e9e5dd;
+    padding: 14px 18px;
+    font: 400 14px/1.55 var(--font-body);
+  }
+
+  .record-band__figures {
+    padding: 44px 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  @media (max-width: 899.98px) {
+    .record-band {
+      grid-template-columns: 1fr;
+    }
+
+    .record-band__photo {
+      aspect-ratio: 3 / 2;
+      border-right: none;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .record-band__figures {
+      padding: 24px 18px;
+    }
+  }
+
+  .event-spotlight {
+    display: grid;
+    grid-template-columns: 168px 1fr 240px;
+    gap: 40px;
+    align-items: center;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
+    padding: 28px 0;
+  }
+
+  .event-spotlight__day {
+    font: 600 46px/0.95 var(--font-heading);
+    letter-spacing: -0.03em;
+  }
+
+  .event-spotlight__time {
+    font: 500 13px/1.5 var(--font-mono);
+    letter-spacing: 0.04em;
+    color: #5b6360;
+    padding-top: 8px;
+  }
+
+  .event-spotlight__details {
+    display: flex;
+    border-top: 1px solid var(--rule);
+    max-width: 56ch;
+    margin-top: 14px;
+  }
+
+  .event-spotlight__details > div {
+    padding: 12px 20px 0 0;
+    border-right: 1px solid var(--rule);
+  }
+
+  .event-spotlight__details > div:first-child {
+    padding-left: 0;
+  }
+
+  .event-spotlight__details > div:last-child {
+    border-right: none;
+    padding-right: 0;
+  }
+
+  .event-spotlight__detail-value {
+    font: 600 20px/1 var(--font-heading);
+  }
+
+  .event-spotlight__cta {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  @media (max-width: 899.98px) {
+    .event-spotlight {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      padding: 18px 0 0;
+    }
+
+    .event-spotlight__details {
+      flex-wrap: wrap;
+    }
+  }
+</style>
