@@ -1,7 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import FigureList from "../components/FigureList.astro";
-import SocialFeed from "../components/SocialFeed.astro";
 import SocialFollowList from "../components/SocialFollowList.astro";
 import { followAlong, letter, nextEvent, volunteerAreas } from "../data/homepage";
 import { founderPhoto, recordFigures, recordNote } from "../data/record";
@@ -106,7 +105,6 @@ import { site } from "../data/site";
     </div>
     <h3 style="margin-bottom: 8px;">{followAlong.heading}</h3>
     <p class="prose" style="margin-bottom: 26px; max-width: 64ch;">{followAlong.body}</p>
-    <SocialFeed />
     <SocialFollowList links={followAlong.links} />
   </section>
 

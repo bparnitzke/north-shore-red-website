@@ -47,9 +47,9 @@ export const nextEvent = {
 };
 
 export const followAlong = {
-  heading: "North Shore Red in motion.",
+  heading: "Follow the work as it happens.",
   body:
-    "Canvassing photos, candidate news, event notices, and short updates from the board come together here from the social channels our volunteers already manage.",
+    "North Shore Red's social channels carry event notices, photos from the field, candidate news, and short updates from the board. Choose a channel below to stay connected.",
   links: [
     { title: "Facebook", body: "Event notices and longer posts from the board.", href: "facebook" as const },
     { title: "Instagram", body: "Photos from canvasses, postcard nights and events.", href: "instagram" as const },
