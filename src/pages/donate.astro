@@ -15,7 +15,7 @@ import { site } from "../data/site";
 <BaseLayout title="Why donate to us" description={shortVersion.body}>
   <section class="band band--hero">
     <span class="eyebrow" style="padding-bottom: 20px; display: block;">01 — The short version</span>
-    <h2 style="max-width: 26ch; margin-bottom: 20px;">{shortVersion.heading}</h2>
+    <h1 style="max-width: 26ch; margin-bottom: 20px;">{shortVersion.heading}</h1>
     <p class="lead" style="max-width: 64ch; margin-bottom: 26px;">{shortVersion.body}</p>
     <div style="display:flex; gap:14px; flex-wrap: wrap;">
       <a class="btn btn--primary" href={site.donationUrl} target="_blank" rel="noopener">Donate</a>
@@ -34,10 +34,9 @@ import { site } from "../data/site";
         {votersWeAreAfter.figures.map((figure) => (
           <div class="figure-row" style="border-top: 1px solid var(--ink); border-bottom: 1px solid var(--rule);">
             <span>{figure.label}</span>
-            <span class="figure-row__value" style="font-size: 30px; letter-spacing: -0.025em;">{figure.value}</span>
+            <span class="figure-row__value" style="font-size: 30px; letter-spacing: 0;">{figure.value}</span>
           </div>
         ))}
-        <p class="meta" style="padding-top: 12px;">{votersWeAreAfter.note}</p>
       </div>
     </div>
   </section>
@@ -58,7 +57,7 @@ import { site } from "../data/site";
     </div>
     <div class="funding-cta">
       <a class="btn btn--primary" href={site.donationUrl} target="_blank" rel="noopener">{fundingStatus.ctaLabel}</a>
-      <span class="prose" style="color: #a9a294; max-width: 52ch;">{fundingStatus.disclosure}</span>
+      <span class="prose" style="color: var(--body-on-ink); max-width: 52ch;">{fundingStatus.disclosure}</span>
     </div>
   </section>
 
@@ -87,6 +86,15 @@ import { site } from "../data/site";
       <h3 style="margin-bottom: 12px;">{localDecisions.heading}</h3>
       <p class="prose">{localDecisions.body}</p>
     </div>
+  </section>
+
+  <section class="band donation-close">
+    <div>
+      <span class="eyebrow" style="padding-bottom: 14px; display:block;">07 — Put your contribution to work</span>
+      <h2 style="margin-bottom: 10px;">Help reach the next voter.</h2>
+      <p class="prose" style="max-width: 58ch;">Your donation goes directly to practical voter contact led by Wisconsin volunteers.</p>
+    </div>
+    <a class="btn btn--primary" href={site.donationUrl} target="_blank" rel="noopener">Donate now</a>
   </section>
 </BaseLayout>
 
@@ -130,7 +138,19 @@ import { site } from "../data/site";
     flex-wrap: wrap;
   }
 
+  .donation-close {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    background: var(--paper-alt);
+  }
+
   @media (max-width: 899.98px) {
+    .donation-close {
+      align-items: stretch;
+      flex-direction: column;
+    }
     .funding-columns {
       grid-template-columns: 1fr;
     }

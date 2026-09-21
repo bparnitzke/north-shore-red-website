@@ -8,7 +8,7 @@ import { communities, founderPhoto, recordFigures, recordNote, values } from "..
 <BaseLayout title="About us" description="Who North Shore Red is, how it formed, and what it stands for.">
   <section class="band band--hero">
     <span class="eyebrow" style="padding-bottom: 20px; display: block;">01 — Who we are</span>
-    <h2 style="max-width: 24ch; margin-bottom: 20px;">A small board of committed volunteers, and nobody on payroll.</h2>
+    <h1 style="max-width: 24ch; margin-bottom: 20px;">A small board of committed volunteers, and nobody on payroll.</h1>
     <p class="lead" style="max-width: 64ch;">
       North Shore Red is a Wisconsin 501(c)(4) organization promoting conservative principles across the North
       Shore, Milwaukee County, and at every level of government. We are led entirely by volunteers — which is
@@ -61,7 +61,6 @@ import { communities, founderPhoto, recordFigures, recordNote, values } from "..
     <div class="community-row">
       {communities.map((community) => <div>{community}</div>)}
     </div>
-    <div class="meta" style="border-top: 1px solid var(--rule); padding-top: 14px;">Confirm the community list before launch</div>
   </section>
 
   <section class="band columns-2">
@@ -102,7 +101,7 @@ import { communities, founderPhoto, recordFigures, recordNote, values } from "..
 
   .letter-band__signature {
     font: 400 15px/1.5 var(--font-body);
-    color: #a9a294;
+    color: var(--body-on-ink-muted);
     font-style: italic;
   }
 

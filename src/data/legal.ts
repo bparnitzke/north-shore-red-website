@@ -9,11 +9,12 @@ export const privacyClauses: LegalClause[] = [
   {
     heading: "Information we collect",
     body:
-      "We may collect personal information such as your name, address, email address, and phone number when you submit forms on our website, such as the contact form. We also collect non-personal information, such as browser type and IP address, through cookies and similar technologies to improve your experience."
+      "We may collect personal information such as your name, email address, message, interests you select, and, if you choose SMS enrollment, your mobile number and consent record. We may also collect limited technical information needed to operate and secure the website."
   },
   {
     heading: "Cell phone policy",
-    body: "Cell phone number could be used for contacting via phone or text message. Standard text rates may apply."
+    body:
+      "SMS enrollment is optional and is not a condition of a purchase or donation. If you opt in, North Shore Red may send recurring automated messages including voting reminders, election-related information, organization updates, and donation solicitations. Message frequency varies. Message and data rates may apply. Reply STOP to end messages or HELP for help. Mobile information, SMS opt-in data, and consent records will not be sold or shared with third parties or affiliates for their marketing or promotional purposes. They may be shared with operational service providers solely to deliver and support the messaging program."
   },
   {
     heading: "How we use your information",

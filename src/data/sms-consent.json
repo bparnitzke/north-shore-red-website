@@ -1,0 +1,9 @@
+{
+  "version": "2026-09-21-v1",
+  "programId": "nsr-general-sms",
+  "checkboxLabel": "Send me text messages from North Shore Red.",
+  "beforePolicyLinks": "By checking this box and providing your phone number, you agree to receive recurring automated text messages from North Shore Red. Messages may include voting reminders, election-related information, organization updates, and donation solicitations. Message frequency varies. Message and data rates may apply. Reply STOP to end messages or HELP for help. Consent is not a condition of a purchase or donation. Mobile information and SMS opt-in data will not be sold. See our",
+  "betweenPolicyLinks": "and",
+  "afterPolicyLinks": ".",
+  "exactText": "Send me text messages from North Shore Red. By checking this box and providing your phone number, you agree to receive recurring automated text messages from North Shore Red. Messages may include voting reminders, election-related information, organization updates, and donation solicitations. Message frequency varies. Message and data rates may apply. Reply STOP to end messages or HELP for help. Consent is not a condition of a purchase or donation. Mobile information and SMS opt-in data will not be sold. See our Privacy Policy and Terms of Use."
+}

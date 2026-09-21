@@ -13,10 +13,12 @@
   --rule-dark-alt: #4a5350;
   --body: #3c4442;
   --body-muted: #4b534f;
-  --meta: #7a8280;
+  --meta: #5f6866;
   --meta-on-ink: #9aa3a2;
   --meta-on-ink-soft: #8e9694;
   --body-on-ink: #c9c1b3;
+  --body-on-ink-muted: #a9a294;
+  --red-rule: #e8b9bd;
   --input-border: #c9c4b6;
   --field-bg: #ffffff;
 
@@ -80,22 +82,28 @@ h4 {
   margin: 0;
   font-family: var(--font-heading);
   color: var(--ink);
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   line-height: 1.15;
+}
+
+h1 {
+  font-size: 33px;
+  font-weight: 600;
+  line-height: 1.08;
 }
 
 h2 {
   font-size: 33px;
   font-weight: 600;
   line-height: 1.08;
-  letter-spacing: -0.025em;
+  letter-spacing: 0;
 }
 
 h3 {
   font-size: 24px;
   font-weight: 600;
   line-height: 1.18;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
 }
 
 h4 {
@@ -105,6 +113,7 @@ h4 {
 }
 
 @media (min-width: 900px) {
+  h1,
   h2 {
     font-size: 52px;
     line-height: 1.06;
@@ -257,7 +266,7 @@ summary:focus-visible {
   .rail {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 18px;
     position: fixed;
     top: 0;
     left: 0;
@@ -266,7 +275,7 @@ summary:focus-visible {
     padding: 26px 24px;
     background: var(--ink);
     color: #e9e5dd;
-    overflow-y: auto;
+    overflow: hidden;
     z-index: 20;
   }
 
@@ -282,8 +291,8 @@ summary:focus-visible {
 }
 
 .rail__logo {
-  width: 150px;
-  height: 150px;
+  width: 132px;
+  height: 132px;
   object-fit: contain;
   align-self: center;
 }
@@ -305,7 +314,7 @@ summary:focus-visible {
 }
 
 .rail__nav a {
-  padding: 9px 0;
+  padding: 7px 0;
   font-weight: 500;
   font-size: 16px;
   border-bottom: 1px solid var(--rule-dark);
@@ -327,7 +336,7 @@ summary:focus-visible {
   font: 500 10px/1 var(--font-mono);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #7c8583;
+  color: var(--meta-on-ink);
 }
 
 .rail__social a {
@@ -443,7 +452,7 @@ summary:focus-visible {
   font: 600 26px/1.15 var(--font-heading);
   color: #fff;
   border-bottom: 1px solid var(--rule-dark);
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
 }
 
 .mobile-menu__social {
@@ -457,7 +466,7 @@ summary:focus-visible {
   font: 500 10px/1 var(--font-mono);
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #7c8583;
+  color: var(--meta-on-ink);
 }
 
 .mobile-menu__social-links {
@@ -572,7 +581,7 @@ summary:focus-visible {
 
 .figure-row__value {
   font: 500 26px/1 var(--font-heading);
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
 }
 
 .columns-2 {
@@ -682,89 +691,6 @@ summary:focus-visible {
 
   .social-follow a:first-child {
     border-top: 1px solid var(--ink);
-  }
-}
-
-.embed-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  padding-top: 26px;
-}
-
-.embed-frame {
-  border: 1px solid var(--rule);
-  background: var(--paper-alt);
-  display: flex;
-  flex-direction: column;
-}
-
-.embed-frame__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 14px;
-  border-bottom: 1px solid var(--rule);
-  font: 600 14px/1 var(--font-heading);
-}
-
-.embed-frame__body {
-  height: 340px;
-  overflow-y: auto;
-}
-
-.embed-frame__fallback {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 14px;
-  text-align: center;
-}
-
-@media (max-width: 899.98px) {
-  .embed-grid {
-    display: block;
-  }
-
-  .embed-frame + .embed-frame {
-    margin-top: 16px;
-  }
-}
-
-.embed-tabs {
-  display: none;
-}
-
-@media (max-width: 899.98px) {
-  .embed-tabs {
-    display: flex;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .embed-tabs button {
-    flex: 1;
-    background: none;
-    border: none;
-    padding: 12px;
-    font: 600 13px/1 var(--font-heading);
-    letter-spacing: 0.04em;
-    cursor: pointer;
-    color: var(--meta);
-    border-bottom: 2px solid transparent;
-  }
-
-  .embed-tabs button[aria-selected="true"] {
-    color: var(--ink);
-    border-bottom-color: var(--red);
-  }
-
-  .embed-panel {
-    display: none;
-  }
-
-  .embed-panel[data-active="true"] {
-    display: block;
   }
 }
 
@@ -899,7 +825,7 @@ summary:focus-visible {
 
 .interest-panel__hint {
   font: 400 15px/1.6 var(--font-body);
-  color: #5b6360;
+  color: var(--body-muted);
   padding-bottom: 18px;
 }
 
@@ -962,7 +888,7 @@ summary:focus-visible {
 
 .sms-panel a {
   color: var(--red);
-  border-bottom: 1px solid #e8b9bd;
+  border-bottom: 1px solid var(--red-rule);
 }
 
 .form-submit-row {
@@ -976,8 +902,63 @@ summary:focus-visible {
 
 .form-note {
   font: 400 14px/1.6 var(--font-body);
-  color: #5b6360;
+  color: var(--body-muted);
   max-width: 38ch;
+}
+
+.sms-panel__phone {
+  margin: 18px 0 0 32px;
+  max-width: 420px;
+}
+
+.sms-panel__phone[hidden] {
+  display: none;
+}
+
+.sms-panel__phone .field__error {
+  margin: 0;
+}
+
+@media (min-width: 900px) and (max-height: 820px) {
+  .rail {
+    gap: 12px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+
+  .rail__logo {
+    width: 92px;
+    height: 92px;
+  }
+
+  .rail__tagline {
+    padding: 7px 0;
+    line-height: 1.45;
+  }
+
+  .rail__nav a {
+    padding: 5px 0;
+    font-size: 14px;
+  }
+
+  .rail__social {
+    display: none;
+  }
+
+  .rail__actions {
+    gap: 7px;
+  }
+
+  .rail__actions .btn {
+    padding: 11px;
+    font-size: 15px;
+  }
+
+  .rail__legal {
+    font-size: 9px;
+    line-height: 1.35;
+    padding-top: 0;
+  }
 }
 
 .form-status {

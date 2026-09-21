@@ -12,7 +12,8 @@ organization. Built to "The Civic Ledger" design system from the Claude Design h
 - Design tokens and shared chrome (rail, mobile menu, buttons, forms) in `src/styles/global.css`.
 - Editable content in `src/data`.
 - Static assets in `public/assets`, client photo in `public/uploads`.
-- `public/contact.php`: the contact form's submission handler (see below).
+- `public/contact.php`: the contact form's submission and consent-ledger handler (see below).
+- Scheduled static social-feed refreshes through GitHub Actions.
 
 ## Routes
 
@@ -39,20 +40,32 @@ pnpm preview   # preview the static build
 
 ## Contact form
 
-The form posts as JSON-expecting `fetch` to `/contact.php`, which Astro copies into `dist/`
-unchanged. On cPanel, upload the built `dist/` contents to `public_html` and PHP's `mail()`
-handles delivery — no build step or environment variables needed on the host. It:
+The form posts to `/contact.php`, which Astro copies into `dist/` unchanged. On cPanel, upload
+the built `dist/` contents to `public_html`. PHP records the consent decision in MySQL before
+using `mail()` for delivery. It:
 
 - Emails both `brian@orbiterstrategies.com` and `NorthShoreRedFund@gmail.com`, with `Reply-To`
   set to the submitter and the checked interests in the subject/body.
 - Rejects the submission if the honeypot field is filled or if it arrives less than ~2 seconds
   after the form rendered (both silent to the caller, so bots don't learn why they failed).
 - Validates name, email, and comments server-side in addition to the client-side checks.
+- Records an append-only SMS decision with a UTC timestamp, source URL, program ID, selected
+  interests, disclosure version, and the exact disclosure text shown. A mobile number is stored
+  only when SMS is selected.
 - Redirects a plain `GET` (e.g., an old bookmark to the previous site's `contact.php`) to
   `/contact/` instead of returning an empty API response.
 
-A host without PHP/`mail()` configured will need a different handler — swap the `fetch` target
-in `src/components/ContactForm.astro` if so.
+Run `database/schema.mysql.sql` once and configure `NSR_DB_DSN`, `NSR_DB_USER`, and
+`NSR_DB_PASSWORD` on the host. The form fails closed if the ledger cannot be written. See
+`docs/contact-consent-ledger.md` for setup, testing, and future opt-out handling. The site records
+consent but does not send SMS messages.
+
+## Social feed
+
+The homepage reads a normalized static feed from `src/data/social.generated.json`. GitHub Actions
+runs `scripts/sync-social.mjs` every six hours and commits new posts when provider credentials are
+configured. Visitors receive ordinary static HTML instead of third-party feed scripts. See
+`docs/social-feed.md` for required Meta and X repository secrets.
 
 ## Editing content
 
@@ -63,6 +76,7 @@ in `src/components/ContactForm.astro` if so.
 - Why donate page copy: `src/data/whydonate.ts`
 - Contact form interest options and success-state copy: `src/data/contact.ts`
 - Privacy/Terms clauses: `src/data/legal.ts`
+- SMS disclosure text and version: `src/data/sms-consent.json`
 - Design tokens (colors, type scale, spacing) and shared chrome: `src/styles/global.css`
 
 ## Still needed from the client
@@ -72,13 +86,10 @@ See `docs/content-confirmation-checklist.md`, plus, per the design handoff:
 1. The voting-plan tool URL (`site.votingPlanUrl` in `src/data/site.ts` — currently `null`,
    so the nav and CTAs fall back to the internal `/make-a-plan/` page until it's set).
 2. Garden Party venue and program details.
-3. Photography for every placeholder.
-4. Verification of all figures in `src/data/record.ts` and `src/data/whydonate.ts`.
-5. Final fundraising disclosure and disclaimer language, reviewed by counsel.
-6. Instagram live-feed integration — it needs the org's account connected via the Basic
-   Display API or an embed service; until then `SocialEmbeds.astro` shows the plain account
-   link. Facebook (Page Plugin) and X (`platform.twitter.com/widgets.js`) are wired up and
-   fall back to the plain link if the embed fails to load.
+3. Photography for remaining content needs.
+4. Internal verification of figures in `src/data/record.ts` and `src/data/whydonate.ts`.
+5. Final fundraising, Privacy, Terms, and SMS language reviewed by counsel and the messaging provider.
+6. Meta and X API credentials for the scheduled social feed.
 7. A social share image and a favicon beyond the placeholder `public/favicon.svg`.
 
 ## Deployment (cPanel)
@@ -97,3 +108,5 @@ See `docs/content-confirmation-checklist.md`, plus, per the design handoff:
 - Content confirmation checklist: `docs/content-confirmation-checklist.md`
 - Future voting tool architecture: `docs/future-voting-tool.md`
 - Future SMS/10DLC checklist: `docs/sms-10dlc-checklist.md`
+- Contact consent ledger: `docs/contact-consent-ledger.md`
+- Social feed setup: `docs/social-feed.md`

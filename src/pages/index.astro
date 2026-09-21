@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import FigureList from "../components/FigureList.astro";
-import SocialEmbeds from "../components/SocialEmbeds.astro";
+import SocialFeed from "../components/SocialFeed.astro";
 import SocialFollowList from "../components/SocialFollowList.astro";
 import { followAlong, letter, nextEvent, volunteerAreas } from "../data/homepage";
 import { founderPhoto, recordFigures, recordNote } from "../data/record";
@@ -15,7 +15,7 @@ import { site } from "../data/site";
 >
   <section class="band band--hero">
     <span class="eyebrow" style="padding-bottom: 20px; display: block;">01 — Who we are</span>
-    <h2 style="max-width: 22ch; margin-bottom: 20px;">A small board of committed volunteers, and nobody on payroll.</h2>
+    <h1 style="max-width: 22ch; margin-bottom: 20px;">Grassroots work. Local decisions. Measurable results.</h1>
     <p class="lead" style="margin-bottom: 24px;">
       North Shore Red is a Wisconsin 501(c)(4) organization promoting conservative principles across the North
       Shore, Milwaukee County, and at every level of government. We are led entirely by volunteers — which is
@@ -34,7 +34,7 @@ import { site } from "../data/site";
     </div>
     <div>
       <p class="letter-band__lead">{letter.lead}</p>
-      {letter.body.map((paragraph) => <p class="prose" style="margin-bottom: 16px; max-width: 66ch;">{paragraph}</p>)}
+      <p class="prose" style="margin-bottom: 16px; max-width: 66ch;">{letter.body[0]}</p>
       <div class="letter-band__signoff">
         <span class="letter-band__signature">{letter.signoff}</span>
         <a class="btn btn--on-ink" href="/about/" style="margin-left: auto; white-space: nowrap;">Read the full story</a>
@@ -93,22 +93,21 @@ import { site } from "../data/site";
       </div>
       <div class="event-spotlight__cta">
         <a class="btn btn--primary" href="/contact/?interest=event">Join the invitation list</a>
-        <p class="prose prose--small" style="color: #5b6360;">Invitations go out to people on the list. Adding your name is the first step, not a ticket purchase.</p>
+        <p class="prose prose--small" style="color: var(--body-muted);">Invitations go out to people on the list. Adding your name is the first step, not a ticket purchase.</p>
       </div>
     </div>
-    <p class="prose prose--small" style="color: #5b6360; max-width: 70ch; margin-top: 18px;">{nextEvent.footNote}</p>
+    <p class="prose prose--small" style="color: var(--body-muted); max-width: 70ch; margin-top: 18px;">{nextEvent.footNote}</p>
   </section>
 
   <section class="band">
     <div class="marker-row" style="padding-bottom: 6px;">
-      <span class="eyebrow">06 — Follow along</span>
-      <span class="meta">{followAlong.updateFrequency}</span>
+      <span class="eyebrow">06 — From the field</span>
+      <span class="meta">Facebook · Instagram · X</span>
     </div>
     <h3 style="margin-bottom: 8px;">{followAlong.heading}</h3>
     <p class="prose" style="margin-bottom: 26px; max-width: 64ch;">{followAlong.body}</p>
+    <SocialFeed />
     <SocialFollowList links={followAlong.links} />
-    <SocialEmbeds />
-    <p class="meta" style="padding-top: 12px;">{followAlong.note}</p>
   </section>
 
   <section class="band columns-2">
@@ -160,7 +159,7 @@ import { site } from "../data/site";
 
   .letter-band__signature {
     font: 400 15px/1.5 var(--font-body);
-    color: #a9a294;
+    color: var(--body-on-ink-muted);
     font-style: italic;
   }
 
@@ -237,13 +236,13 @@ import { site } from "../data/site";
 
   .event-spotlight__day {
     font: 600 46px/0.95 var(--font-heading);
-    letter-spacing: -0.03em;
+    letter-spacing: 0;
   }
 
   .event-spotlight__time {
     font: 500 13px/1.5 var(--font-mono);
     letter-spacing: 0.04em;
-    color: #5b6360;
+    color: var(--body-muted);
     padding-top: 8px;
   }
 

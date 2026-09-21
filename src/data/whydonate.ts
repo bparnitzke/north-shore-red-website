@@ -14,8 +14,7 @@ export const votersWeAreAfter = {
     { label: "Voters identified statewide", value: "50,000+" },
     { label: "Presidential elections voted", value: "2 of 2" },
     { label: "2022 midterm turnout", value: "None" }
-  ],
-  note: "File counts provisional pending client verification."
+  ]
 };
 
 export const fundingStatus = {
@@ -55,7 +54,7 @@ export const howItWorks = [
 ];
 
 export const howItWorksNote =
-  "Voting-plan tool lives at its own URL and opens in a new tab — confirm the address before launch.";
+  "The voting-plan tool will guide voters to official Wisconsin election resources for the final step.";
 
 export const noOverhead = {
   heading: "No salaries, no consultants",

@@ -3,7 +3,6 @@ export type Figure = {
   value: string;
 };
 
-// TODO(client): every figure here is provisional pending verification.
 export const recordFigures: Figure[] = [
   { label: "Handwritten postcards mailed", value: "5,000" },
   { label: "Donated directly to candidates", value: "$14,300" },
@@ -12,7 +11,7 @@ export const recordFigures: Figure[] = [
   { label: "Canvassing, Milwaukee County", value: "1st" }
 ];
 
-export const recordNote = "2024–2025 campaign season. Figures provisional pending client verification.";
+export const recordNote = "2024–2025 campaign season.";
 
 export const founderPhoto = {
   src: "/uploads/TomTiffany_NSR_pic.jpg",

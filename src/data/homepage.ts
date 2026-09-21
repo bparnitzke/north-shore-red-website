@@ -2,7 +2,7 @@ export const letter = {
   lead:
     "We founded North Shore Red because we care deeply about the future of the North Shore, Milwaukee, Wisconsin, and our country — and because the grassroots work being done here deserved an organization that could raise and allocate its own funds.",
   body: [
-    "For years the volunteers now behind this organization were a model of grassroots excellence: an independently funded campaign office in Glendale, the county's yard-sign hub, five major fundraising events, and canvassers who outperformed every other team in Milwaukee County. We intend to carry that legacy forward with more agility, not less.",
+    "The volunteers behind this organization have run a campaign office, distributed yard signs across Milwaukee County, hosted major fundraising events, and built a county-leading canvassing effort. North Shore Red gives that work the independence and focus to keep growing.",
     "Our aim is plain. Defend the values that made America strong — individual liberty, limited government, fiscal responsibility, free markets, and a strong national defense — and help elect principled conservatives who will stand for them. We invite every conservative on the North Shore to join us in this chapter."
   ],
   signoff: "— The founding board of North Shore Red"
@@ -47,14 +47,12 @@ export const nextEvent = {
 };
 
 export const followAlong = {
-  updateFrequency: "Updated several times a week",
-  heading: "The day-to-day lives on Facebook, Instagram and X.",
+  heading: "North Shore Red in motion.",
   body:
-    "Photos from the doors, candidate news, and short updates from the board go up on our accounts as they happen — and they appear here automatically. That is the fastest way to see what North Shore Red is doing this week.",
+    "Canvassing photos, candidate news, event notices, and short updates from the board come together here from the social channels our volunteers already manage.",
   links: [
     { title: "Facebook", body: "Event notices and longer posts from the board.", href: "facebook" as const },
     { title: "Instagram", body: "Photos from canvasses, postcard nights and events.", href: "instagram" as const },
     { title: "X", body: "Short, fast updates and candidate news — @northshore_red.", href: "x" as const }
-  ],
-  note: "All three are live embeds of the real accounts — nothing here is curated or hand-updated. Feed heights are capped and scroll internally."
+  ]
 };

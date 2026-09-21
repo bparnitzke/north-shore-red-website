@@ -5,9 +5,11 @@
   "type": "module",
   "packageManager": "pnpm@11.19.0",
   "scripts": {
-    "dev": "node scripts/astro-command.mjs dev",
-    "build": "node scripts/astro-command.mjs check && node scripts/astro-command.mjs build",
-    "check": "node scripts/astro-command.mjs check",
+    "prepare:static": "node scripts/prepare-static.mjs",
+    "dev": "node scripts/prepare-static.mjs && node scripts/astro-command.mjs dev",
+    "build": "node scripts/prepare-static.mjs && node scripts/astro-command.mjs check && node scripts/astro-command.mjs build",
+    "check": "node scripts/prepare-static.mjs && node scripts/astro-command.mjs check",
+    "sync:social": "node scripts/sync-social.mjs",
     "preview": "node scripts/astro-command.mjs preview"
   },
   "dependencies": {

@@ -1,5 +1,6 @@
 ---
 import { interestOptions } from "../data/contact";
+import smsConsent from "../data/sms-consent.json";
 ---
 
 <form class="contact-form" id="contact-form" novalidate>
@@ -14,6 +15,9 @@ import { interestOptions } from "../data/contact";
     </label>
   </div>
   <input type="hidden" name="rendered_at" value="" />
+  <input type="hidden" name="source_url" value="" />
+  <input type="hidden" name="sms_consent_version" value={smsConsent.version} />
+  <input type="hidden" name="sms_program_id" value={smsConsent.programId} />
 
   <div class="interest-panel">
     <div class="interest-panel__title">What would you like to do?</div>
@@ -35,48 +39,20 @@ import { interestOptions } from "../data/contact";
     <p class="field__error">Please enter your name.</p>
   </div>
 
-  <div class="field" style="margin-top: 22px">
-    <label for="c-address">Address</label>
-    <input id="c-address" name="address" type="text" autocomplete="address-line1" />
-  </div>
-
-  <div class="field" style="margin-top: 22px">
-    <label for="c-address2">Address 2</label>
-    <input id="c-address2" name="address2" type="text" autocomplete="address-line2" />
-  </div>
-
-  <div class="field-row-3" style="margin-top: 22px">
-    <div class="field">
-      <label for="c-city">City</label>
-      <input id="c-city" name="city" type="text" autocomplete="address-level2" />
-    </div>
-    <div class="field">
-      <label for="c-state">State</label>
-      <input id="c-state" name="state" type="text" value="WI" autocomplete="address-level1" />
-    </div>
-    <div class="field">
-      <label for="c-zip">Zip</label>
-      <input id="c-zip" name="zip" type="text" autocomplete="postal-code" />
-    </div>
-  </div>
-
-  <div class="field" style="margin-top: 22px">
-    <label for="c-phone">Phone</label>
-    <input id="c-phone" name="phone" type="tel" autocomplete="tel" />
-  </div>
-
   <div class="sms-panel" style="margin-top: 22px">
     <label for="c-sms">
-      <input id="c-sms" name="sms_consent" type="checkbox" />
-      <span>I authorize North Shore Red to send me SMS text messages.</span>
+      <input id="c-sms" name="sms_consent" type="checkbox" aria-controls="sms-phone-field" aria-expanded="false" />
+      <span>{smsConsent.checkboxLabel}</span>
     </label>
     <p>
-      By checking this box and providing your phone number, you consent to receive recurring text messages from
-      North Shore Red at the number provided, including messages sent by autodialer. Consent is not a condition of
-      any purchase or donation. Msg &amp; data rates may apply. Msg frequency varies. Reply STOP to unsubscribe at
-      any time. Reply HELP for help. See our <a href="/privacy-policy/">Privacy Policy</a> and
-      <a href="/terms-and-conditions/">Terms of Use</a>.
+      {smsConsent.beforePolicyLinks} <a href="/privacy-policy/">Privacy Policy</a> {smsConsent.betweenPolicyLinks}
+      <a href="/terms-and-conditions/">Terms of Use</a>{smsConsent.afterPolicyLinks}
     </p>
+    <div class="field sms-panel__phone" id="sms-phone-field" hidden>
+      <label for="c-phone">Mobile number <span class="field-required">*</span></label>
+      <input id="c-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" disabled />
+      <p class="field__error">Please enter a valid mobile number.</p>
+    </div>
   </div>
 
   <div class="field" style="margin-top: 22px">
@@ -106,6 +82,25 @@ import { interestOptions } from "../data/contact";
   if (form) {
     const renderedAt = form.querySelector<HTMLInputElement>('[name="rendered_at"]');
     if (renderedAt) renderedAt.value = String(Date.now());
+    const sourceUrl = form.querySelector<HTMLInputElement>('[name="source_url"]');
+    if (sourceUrl) sourceUrl.value = window.location.href;
+
+    const smsCheckbox = form.querySelector<HTMLInputElement>("#c-sms");
+    const phoneField = form.querySelector<HTMLElement>("#sms-phone-field");
+    const phoneInput = form.querySelector<HTMLInputElement>("#c-phone");
+    const syncSmsFields = () => {
+      const enabled = Boolean(smsCheckbox?.checked);
+      if (phoneField) phoneField.hidden = !enabled;
+      if (phoneInput) {
+        phoneInput.disabled = !enabled;
+        phoneInput.required = enabled;
+        if (!enabled) {
+          phoneInput.value = "";
+          setFieldValid(phoneInput, true);
+        }
+      }
+      smsCheckbox?.setAttribute("aria-expanded", String(enabled));
+    };
 
     const params = new URLSearchParams(window.location.search);
     const interestParam = params.get("interest");
@@ -121,6 +116,10 @@ import { interestOptions } from "../data/contact";
       const wrapper = field.closest(".field");
       wrapper?.classList.toggle("field--invalid", !valid);
     };
+
+    smsCheckbox?.addEventListener("change", syncSmsFields);
+    phoneInput?.addEventListener("input", () => setFieldValid(phoneInput, phoneInput.checkValidity()));
+    syncSmsFields();
 
     const validate = () => {
       let valid = true;
