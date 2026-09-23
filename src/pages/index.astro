@@ -26,9 +26,19 @@ import { site } from "../data/site";
     </div>
   </section>
 
+  <section class="band">
+    <div class="marker-row" style="padding-bottom: 6px;">
+      <span class="eyebrow">02 — From the field</span>
+      <span class="meta">Facebook · Instagram · X</span>
+    </div>
+    <h3 style="margin-bottom: 8px;">{followAlong.heading}</h3>
+    <p class="prose" style="margin-bottom: 26px; max-width: 64ch;">{followAlong.body}</p>
+    <SocialFollowList links={followAlong.links} />
+  </section>
+
   <section class="band band--ink letter-band">
     <div class="letter-band__label">
-      <span class="eyebrow" style="padding-bottom: 14px; display:block;">02 — A letter</span>
+      <span class="eyebrow" style="padding-bottom: 14px; display:block;">03 — A letter</span>
       <div class="meta" style="color: var(--meta-on-ink-soft)">From the founding board</div>
     </div>
     <div>
@@ -49,13 +59,13 @@ import { site } from "../data/site";
       </div>
     </div>
     <div class="record-band__figures">
-      <span class="eyebrow" style="padding-bottom: 18px; display:block;">03 — The record</span>
+      <span class="eyebrow" style="padding-bottom: 18px; display:block;">04 — The record</span>
       <FigureList figures={recordFigures} note={recordNote} />
     </div>
   </section>
 
   <section class="band">
-    <span class="eyebrow" style="padding-bottom: 20px; display:block;">04 — Where we need people</span>
+    <span class="eyebrow" style="padding-bottom: 20px; display:block;">05 — Where we need people</span>
     <div class="columns-4 ruled-columns">
       {volunteerAreas.map((area) => (
         <div>
@@ -69,7 +79,7 @@ import { site } from "../data/site";
 
   <section class="band band--paper-alt" id="next-event">
     <div class="marker-row">
-      <span class="eyebrow">05 — Our next event</span>
+      <span class="eyebrow">06 — Our next event</span>
     </div>
     <div class="event-spotlight">
       <div class="event-spotlight__date">
@@ -96,16 +106,6 @@ import { site } from "../data/site";
       </div>
     </div>
     <p class="prose prose--small" style="color: var(--body-muted); max-width: 70ch; margin-top: 18px;">{nextEvent.footNote}</p>
-  </section>
-
-  <section class="band">
-    <div class="marker-row" style="padding-bottom: 6px;">
-      <span class="eyebrow">06 — From the field</span>
-      <span class="meta">Facebook · Instagram · X</span>
-    </div>
-    <h3 style="margin-bottom: 8px;">{followAlong.heading}</h3>
-    <p class="prose" style="margin-bottom: 26px; max-width: 64ch;">{followAlong.body}</p>
-    <SocialFollowList links={followAlong.links} />
   </section>
 
   <section class="band columns-2">

@@ -47,12 +47,12 @@ export const nextEvent = {
 };
 
 export const followAlong = {
-  heading: "Follow the work as it happens.",
+  heading: "The latest from North Shore Red.",
   body:
-    "North Shore Red's social channels carry event notices, photos from the field, candidate news, and short updates from the board. Choose a channel below to stay connected.",
+    "North Shore Red's social channels publish conservative commentary on policies and public statements from Democratic officials, often using humor and a pointed tone, alongside occasional event and outreach updates.",
   links: [
-    { title: "Facebook", body: "Event notices and longer posts from the board.", href: "facebook" as const },
-    { title: "Instagram", body: "Photos from canvasses, postcard nights and events.", href: "instagram" as const },
-    { title: "X", body: "Short, fast updates and candidate news — @northshore_red.", href: "x" as const }
+    { title: "Facebook", body: "Longer commentary, policy comparisons and organization news.", href: "facebook" as const },
+    { title: "Instagram", body: "Visual commentary on politics, policy and public statements.", href: "instagram" as const },
+    { title: "X", body: "Short commentary and reactions — @northshore_red.", href: "x" as const }
   ]
 };
