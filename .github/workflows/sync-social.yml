@@ -19,10 +19,10 @@ jobs:
       - name: Fetch current posts
         env:
           META_GRAPH_VERSION: ${{ vars.META_GRAPH_VERSION }}
-          SOCIAL_META_PAGE_ID: ${{ secrets.SOCIAL_META_PAGE_ID }}
-          SOCIAL_INSTAGRAM_USER_ID: ${{ secrets.SOCIAL_INSTAGRAM_USER_ID }}
+          SOCIAL_META_PAGE_ID: "158689294189935"
+          SOCIAL_INSTAGRAM_USER_ID: "17841429608306451"
           SOCIAL_META_ACCESS_TOKEN: ${{ secrets.SOCIAL_META_ACCESS_TOKEN }}
-          SOCIAL_X_USER_ID: ${{ secrets.SOCIAL_X_USER_ID }}
+          SOCIAL_X_USER_ID: "2045973729260298240"
           SOCIAL_X_BEARER_TOKEN: ${{ secrets.SOCIAL_X_BEARER_TOKEN }}
         run: node scripts/sync-social.mjs
       - name: Commit updated feed
