@@ -5,18 +5,248 @@ import { site } from "../data/site";
 
 <BaseLayout
   title="Make a Voting Plan"
-  description="Make a voting plan and get routed to official Wisconsin election resources."
-  noindex={true}
+  description="Watch a short voting message, make a plan, and continue to Wisconsin's official MyVote resource."
 >
-  <section class="band band--hero">
-    <span class="eyebrow" style="padding-bottom: 20px; display: block;">Future tool</span>
-    <h1 style="max-width: 26ch; margin-bottom: 20px;">Make a voting plan</h1>
-    <p class="lead" style="max-width: 60ch; margin-bottom: 26px;">
-      This page is reserved for a future tool that walks Wisconsin voters through choosing how to vote and
-      building a plan, then hands them off to MyVote Wisconsin — the state's official system — to register,
-      request a ballot, or find a polling place. Until that tool is built, use the official state resource
-      directly below.
-    </p>
-    <a class="btn btn--primary" href={site.myVoteUrl} target="_blank" rel="noopener">Visit MyVote Wisconsin</a>
+  <section class="band band--hero voting-hero">
+    <div>
+      <span class="eyebrow voting-hero__eyebrow">Wisconsin voting</span>
+      <h1>Vote early.<br />Make a plan.</h1>
+    </div>
+    <div class="voting-hero__intro">
+      <p class="lead">
+        Deciding how and when you will vote makes it easier to follow through. Watch this short message, then
+        continue to Wisconsin's official MyVote site for the information you need.
+      </p>
+      <a class="btn btn--primary" href={site.myVoteUrl} target="_blank" rel="noopener">
+        Go to MyVote Wisconsin
+      </a>
+      <p class="meta voting-hero__note">Official state resource · Opens in a new tab</p>
+    </div>
+  </section>
+
+  <section class="band video-band" aria-labelledby="voting-video-title">
+    <div class="video-band__heading">
+      <span class="eyebrow">A 29-second message</span>
+      <h2 id="voting-video-title">Vote Early, Wisconsin</h2>
+    </div>
+    <div class="video-band__frame">
+      <video
+        controls
+        playsinline
+        preload="metadata"
+        poster="/assets/video/vote-early-wisconsin-poster.jpg"
+        aria-label="Vote Early, Wisconsin video"
+      >
+        <source src="/assets/video/vote-early-wisconsin.mp4" type="video/mp4" />
+        Your browser does not support this video. You can
+        <a href="/assets/video/vote-early-wisconsin.mp4">open the video file directly</a>.
+      </video>
+    </div>
+  </section>
+
+  <section class="band plan-steps" aria-labelledby="plan-steps-title">
+    <div class="plan-steps__intro">
+      <span class="eyebrow">Your voting plan</span>
+      <h2 id="plan-steps-title">Three decisions. One less thing left to chance.</h2>
+    </div>
+    <ol class="plan-steps__list">
+      <li>
+        <span aria-hidden="true">01</span>
+        <div>
+          <h3>Choose how</h3>
+          <p>Decide whether you plan to vote absentee, early in person, or on election day.</p>
+        </div>
+      </li>
+      <li>
+        <span aria-hidden="true">02</span>
+        <div>
+          <h3>Confirm the details</h3>
+          <p>Use MyVote Wisconsin to check the official information that applies to you.</p>
+        </div>
+      </li>
+      <li>
+        <span aria-hidden="true">03</span>
+        <div>
+          <h3>Put it on your calendar</h3>
+          <p>Choose a day and time now, then keep the plan somewhere you will see it.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="band band--ink myvote-handoff">
+    <div>
+      <span class="eyebrow">Official election information</span>
+      <h2>Continue with MyVote Wisconsin</h2>
+      <p class="prose">
+        MyVote Wisconsin is operated by the Wisconsin Elections Commission. North Shore Red does not receive
+        the information you enter on the state website.
+      </p>
+    </div>
+    <div class="myvote-handoff__action">
+      <a class="btn btn--primary" href={site.myVoteUrl} target="_blank" rel="noopener">
+        Continue to MyVote Wisconsin
+      </a>
+      <p class="meta">myvote.wi.gov · Opens in a new tab</p>
+    </div>
   </section>
 </BaseLayout>
+
+<style>
+  .voting-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(340px, 1.1fr);
+    gap: 64px;
+    align-items: end;
+    background: var(--paper-alt);
+  }
+
+  .voting-hero__eyebrow {
+    margin-bottom: 20px;
+  }
+
+  .voting-hero h1 {
+    max-width: 12ch;
+  }
+
+  .voting-hero__intro {
+    border-top: 3px solid var(--red);
+    padding-top: 22px;
+  }
+
+  .voting-hero__intro .lead {
+    margin-bottom: 24px;
+  }
+
+  .voting-hero__note {
+    margin-top: 12px;
+  }
+
+  .video-band {
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: 40px;
+    align-items: start;
+  }
+
+  .video-band__heading .eyebrow {
+    margin-bottom: 18px;
+  }
+
+  .video-band__heading h2 {
+    font-size: 31px;
+    line-height: 1.05;
+  }
+
+  .video-band__frame {
+    border-top: 4px solid var(--red);
+    background: var(--ink);
+  }
+
+  .video-band video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--ink);
+  }
+
+  .plan-steps {
+    display: grid;
+    grid-template-columns: minmax(250px, 0.75fr) minmax(0, 1.25fr);
+    gap: 64px;
+    background: var(--paper-alt);
+  }
+
+  .plan-steps__intro .eyebrow {
+    margin-bottom: 18px;
+  }
+
+  .plan-steps__intro h2 {
+    max-width: 18ch;
+  }
+
+  .plan-steps__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--ink);
+  }
+
+  .plan-steps__list li {
+    display: grid;
+    grid-template-columns: 54px minmax(0, 1fr);
+    gap: 18px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .plan-steps__list li > span {
+    font: 600 12px/1.2 var(--font-mono);
+    color: var(--red);
+    padding-top: 4px;
+  }
+
+  .plan-steps__list h3 {
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+
+  .plan-steps__list p {
+    color: var(--body);
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 52ch;
+  }
+
+  .myvote-handoff {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .myvote-handoff .eyebrow {
+    margin-bottom: 16px;
+  }
+
+  .myvote-handoff h2 {
+    margin-bottom: 12px;
+  }
+
+  .myvote-handoff .prose {
+    max-width: 64ch;
+  }
+
+  .myvote-handoff__action {
+    min-width: 290px;
+    text-align: center;
+  }
+
+  .myvote-handoff__action .meta {
+    margin-top: 12px;
+    color: var(--meta-on-ink);
+  }
+
+  @media (max-width: 899.98px) {
+    .voting-hero,
+    .video-band,
+    .plan-steps,
+    .myvote-handoff {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    .voting-hero {
+      align-items: start;
+    }
+
+    .video-band__heading h2 {
+      font-size: 28px;
+    }
+
+    .myvote-handoff__action {
+      min-width: 0;
+      text-align: left;
+    }
+  }
+</style>

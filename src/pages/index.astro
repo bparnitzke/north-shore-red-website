@@ -124,14 +124,14 @@ import { site } from "../data/site";
   </section>
 
   <section class="band columns-2">
-    <div>
+    <div class="voting-callout">
       <span class="eyebrow" style="padding-bottom: 16px; display:block;">07 — Voting</span>
       <h3 style="margin-bottom: 12px;">Make a voting plan</h3>
       <p class="prose" style="margin-bottom: 18px;">
-        Pick how you want to vote — absentee, early in person, or on election day — and we hand you off to
-        MyVote Wisconsin, the state's official system, to register, request a ballot or find your polling place.
+        Watch our short Vote Early, Wisconsin message, decide how and when you will vote, and continue to the
+        state's official MyVote resource for the details that apply to you.
       </p>
-      <a class="link-arrow" href={site.votingPlanUrl ?? "/make-a-plan/"} target={site.votingPlanUrl ? "_blank" : undefined} rel={site.votingPlanUrl ? "noopener" : undefined}>Start your plan →</a>
+      <a class="btn btn--primary" href={site.votingPlanUrl ?? "/make-a-plan/"} target={site.votingPlanUrl ? "_blank" : undefined} rel={site.votingPlanUrl ? "noopener" : undefined}>Make your voting plan</a>
     </div>
     <div>
       <span class="eyebrow" style="padding-bottom: 16px; display:block;">08 — Why donate to us</span>
@@ -147,6 +147,21 @@ import { site } from "../data/site";
 </BaseLayout>
 
 <style>
+  .voting-callout {
+    border-top: 4px solid var(--red);
+    padding-top: 24px;
+  }
+
+  .voting-callout h3 {
+    font-size: 31px;
+  }
+
+  @media (max-width: 899.98px) {
+    .voting-callout h3 {
+      font-size: 28px;
+    }
+  }
+
   .letter-band {
     display: grid;
     grid-template-columns: 170px 1fr;
