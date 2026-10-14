@@ -28,22 +28,46 @@ export const volunteerAreas = [
 ];
 
 export const nextEvent = {
-  dateLabel: "Save the date",
-  month: "Sep",
-  day: "28",
-  weekday: "Sunday",
-  time: "5:00 pm",
+  statusLabel: "Next gathering",
+  name: "Conservative Cocktails",
+  description:
+    "Planning is underway for our next Conservative Cocktails gathering. The date, venue, keynote speaker, and attendance fee will be announced to invited guests.",
+  details: [
+    { label: "Date & venue", value: "To be announced" },
+    { label: "Keynote", value: "To be announced" },
+    { label: "Attendance fee", value: "To be announced" }
+  ],
+  hostNote: "Requesting an invitation does not reserve a ticket or require payment.",
+  footNote:
+    "Add your name to the invitation list now and a board member will follow up when the program and attendance details are ready."
+};
+
+export const previousEvent = {
   name: "The North Shore Red Garden Party",
   description:
-    "Our one large gathering of the year, keynoted by former Governor Tommy Thompson — the longest-serving governor in Wisconsin history. Tickets start at $100, and seats are limited.",
-  details: [
-    { label: "Tickets from", value: "$100" },
-    { label: "Seating", value: "Limited" },
-    { label: "Keynote", value: "Gov. Thompson" }
-  ],
-  hostNote: "Host location and program details go to invited guests.",
-  footNote:
-    "We hold one or two substantial events a year rather than a weekly calendar, and our gatherings are by invitation. Add your name to the invitation list and a board member will follow up — the day-to-day runs on our social accounts below."
+    "A look back at North Shore Red's September 2026 gathering, featuring former Governor Tommy Thompson and an evening of conversation among attendees from across the North Shore.",
+  photos: [
+    {
+      src: "/assets/events/2026-garden-party/garden-party-program.jpg",
+      alt: "Attendees listening to the program during the 2026 North Shore Red Garden Party",
+      caption: "The program"
+    },
+    {
+      src: "/assets/events/2026-garden-party/garden-party-table.jpg",
+      alt: "Guests gathered around a dining table at the 2026 North Shore Red Garden Party",
+      caption: "Around the table"
+    },
+    {
+      src: "/assets/events/2026-garden-party/garden-party-refreshments.jpg",
+      alt: "Refreshments prepared for guests at the 2026 North Shore Red Garden Party",
+      caption: "Prepared for guests"
+    },
+    {
+      src: "/assets/events/2026-garden-party/garden-party-moonrise.jpg",
+      alt: "Moonrise over the water viewed from the 2026 North Shore Red Garden Party",
+      caption: "The evening view"
+    }
+  ]
 };
 
 export const followAlong = {
