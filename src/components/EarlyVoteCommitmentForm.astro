@@ -1,0 +1,303 @@
+---
+import emailConsent from "../data/email-consent.json";
+import smsConsent from "../data/sms-consent.json";
+import { site } from "../data/site";
+---
+
+<div class="commitment-card">
+  <form class="commitment-form" id="early-vote-form" novalidate>
+    <div aria-hidden="true" style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;">
+      <label>
+        Leave this field empty
+        <input type="text" name="honeypot" tabindex="-1" autocomplete="off" />
+      </label>
+    </div>
+    <input type="hidden" name="rendered_at" value="" />
+    <input type="hidden" name="source_url" value="" />
+    <input type="hidden" name="form_type" value="early_vote_commitment" />
+    <input type="hidden" name="sms_consent_version" value={smsConsent.version} />
+    <input type="hidden" name="sms_program_id" value={smsConsent.programId} />
+    <input type="hidden" name="email_consent_version" value={emailConsent.version} />
+    <input type="hidden" name="email_program_id" value={emailConsent.programId} />
+
+    <fieldset class="commitment-method">
+      <legend>How do you intend to vote early?</legend>
+      <label>
+        <input type="radio" name="early_vote_method" value="early_in_person" required />
+        <span><strong>Early in person</strong><span>Vote an in-person absentee ballot at a location and during hours offered by your municipal clerk.</span></span>
+      </label>
+      <label>
+        <input type="radio" name="early_vote_method" value="absentee_by_mail" required />
+        <span><strong>Absentee by mail</strong><span>Request and return an absentee ballot before the applicable deadline.</span></span>
+      </label>
+      <label>
+        <input type="radio" name="early_vote_method" value="unsure" required />
+        <span><strong>I am not sure yet</strong><span>I still intend to vote early and will confirm my options on MyVote Wisconsin.</span></span>
+      </label>
+      <p class="field__error">Choose the early-voting option closest to your current plan.</p>
+    </fieldset>
+
+    <label class="commitment-pledge" for="early-vote-pledge">
+      <input id="early-vote-pledge" name="early_vote_commitment" type="checkbox" value="yes" required />
+      <span>I intend to cast my ballot before Election Day.</span>
+    </label>
+    <p class="field__error pledge-error">Confirm your early-vote commitment to continue.</p>
+
+    <div class="field-row-2">
+      <div class="field">
+        <label for="ev-name">Name <span class="field-required">*</span></label>
+        <input id="ev-name" name="name" type="text" required autocomplete="name" />
+        <p class="field__error">Please enter your name.</p>
+      </div>
+      <div class="field">
+        <label for="ev-email">Email <span class="field-required">*</span></label>
+        <input id="ev-email" name="email" type="email" required autocomplete="email" />
+        <p class="field__error">Please enter a valid email address.</p>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="ev-phone">Mobile number <span id="ev-phone-optional" class="field-optional">Optional</span><span id="ev-phone-required" class="field-required" hidden> *</span></label>
+      <input id="ev-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" pattern="[0-9+() .-]{10,24}" maxlength="24" />
+      <p class="field__hint">Required only if you choose text messages below.</p>
+      <p class="field__error">Please enter a valid mobile number.</p>
+    </div>
+
+    <div class="consent-panel">
+      <label for="ev-email-updates">
+        <input id="ev-email-updates" name="email_consent" type="checkbox" />
+        <span>{emailConsent.checkboxLabel}</span>
+      </label>
+      <p>
+        {emailConsent.beforePolicyLinks} <a href="/privacy-policy/">Privacy Policy</a> {emailConsent.betweenPolicyLinks}
+        <a href="/terms-and-conditions/">Terms of Use</a>{emailConsent.afterPolicyLinks}
+      </p>
+    </div>
+
+    <div class="consent-panel">
+      <label for="ev-sms">
+        <input id="ev-sms" name="sms_consent" type="checkbox" aria-controls="ev-phone" aria-expanded="false" />
+        <span>{smsConsent.checkboxLabel}</span>
+      </label>
+      <p>
+        {smsConsent.beforePolicyLinks} <a href="/privacy-policy/">Privacy Policy</a> {smsConsent.betweenPolicyLinks}
+        <a href="/terms-and-conditions/">Terms of Use</a>{smsConsent.afterPolicyLinks}
+      </p>
+    </div>
+
+    <div class="form-submit-row">
+      <button type="submit" class="btn btn--primary">Record my commitment</button>
+      <span class="form-note">Email and text enrollment are optional. You can continue to MyVote Wisconsin without selecting either.</span>
+    </div>
+    <p class="form-status" role="alert" data-form-status></p>
+  </form>
+
+  <div class="commitment-success" id="early-vote-success" hidden tabindex="-1">
+    <span class="eyebrow">Commitment recorded</span>
+    <h3>Thank you for committing to vote early.</h3>
+    <p class="prose">Use Wisconsin's official election resource to confirm the options and information that apply to you.</p>
+    <a class="btn btn--primary" href={site.myVoteUrl} target="_blank" rel="noopener">Continue to MyVote Wisconsin</a>
+  </div>
+</div>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>("#early-vote-form");
+  if (form) {
+    const renderedAt = form.querySelector<HTMLInputElement>('[name="rendered_at"]');
+    if (renderedAt) renderedAt.value = String(Date.now());
+    const sourceUrl = form.querySelector<HTMLInputElement>('[name="source_url"]');
+    if (sourceUrl) sourceUrl.value = window.location.href;
+
+    const status = form.querySelector<HTMLElement>("[data-form-status]");
+    const smsCheckbox = form.querySelector<HTMLInputElement>("#ev-sms");
+    const phoneInput = form.querySelector<HTMLInputElement>("#ev-phone");
+    const phoneOptional = form.querySelector<HTMLElement>("#ev-phone-optional");
+    const phoneRequired = form.querySelector<HTMLElement>("#ev-phone-required");
+
+    const setFieldValid = (field: HTMLElement, valid: boolean) => {
+      const wrapper = field.closest(".field, .commitment-method");
+      wrapper?.classList.toggle("field--invalid", !valid);
+      if (field.id === "early-vote-pledge") {
+        form.querySelector(".commitment-pledge")?.classList.toggle("field--invalid", !valid);
+        form.querySelector(".pledge-error")?.classList.toggle("is-visible", !valid);
+      }
+    };
+
+    const syncSmsFields = () => {
+      const enabled = Boolean(smsCheckbox?.checked);
+      if (phoneInput) {
+        phoneInput.required = enabled;
+        phoneInput.setAttribute("aria-required", String(enabled));
+        setFieldValid(phoneInput, phoneInput.checkValidity());
+      }
+      if (phoneOptional) phoneOptional.hidden = enabled;
+      if (phoneRequired) phoneRequired.hidden = !enabled;
+      smsCheckbox?.setAttribute("aria-expanded", String(enabled));
+    };
+
+    smsCheckbox?.addEventListener("change", syncSmsFields);
+    phoneInput?.addEventListener("input", () => setFieldValid(phoneInput, phoneInput.checkValidity()));
+    syncSmsFields();
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (status) {
+        status.dataset.visible = "false";
+        status.textContent = "";
+      }
+
+      const honeypot = form.querySelector<HTMLInputElement>('[name="honeypot"]');
+      if (honeypot?.value) return;
+
+      let valid = true;
+      const fields = form.querySelectorAll<HTMLInputElement>("[required], #ev-phone");
+      fields.forEach((field) => {
+        const fieldValid = field.checkValidity();
+        setFieldValid(field, fieldValid);
+        if (!fieldValid) valid = false;
+      });
+
+      if (!valid) {
+        if (status) {
+          status.textContent = "Please complete the highlighted fields above.";
+          status.dataset.visible = "true";
+        }
+        return;
+      }
+
+      const submitButton = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      submitButton?.setAttribute("disabled", "true");
+
+      try {
+        const response = await fetch("/contact.php", {
+          method: "POST",
+          body: new FormData(form),
+          headers: { Accept: "application/json" }
+        });
+        const result = await response.json().catch(() => ({ ok: false }));
+
+        if (response.ok && result.ok) {
+          form.hidden = true;
+          const success = document.querySelector<HTMLElement>("#early-vote-success");
+          if (success) {
+            success.hidden = false;
+            success.focus();
+          }
+        } else if (status) {
+          status.textContent = result.message || "We could not record your commitment. Please try again in a moment.";
+          status.dataset.visible = "true";
+        }
+      } catch {
+        if (status) {
+          status.textContent = "We could not reach the server. Please check your connection and try again.";
+          status.dataset.visible = "true";
+        }
+      } finally {
+        submitButton?.removeAttribute("disabled");
+      }
+    });
+  }
+</script>
+
+<style>
+  .commitment-card {
+    border-top: 4px solid var(--red);
+    background: #fff;
+    padding: 28px;
+  }
+
+  .commitment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .commitment-method {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .commitment-method legend {
+    width: 100%;
+    padding: 0 0 12px;
+    border-bottom: 1px solid var(--ink);
+    font: 600 19px/1.3 var(--font-heading);
+  }
+
+  .commitment-method > label {
+    display: grid;
+    grid-template-columns: 20px minmax(0, 1fr);
+    gap: 14px;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--rule);
+    cursor: pointer;
+  }
+
+  .commitment-method input,
+  .commitment-pledge input {
+    width: 20px;
+    height: 20px;
+    margin: 2px 0 0;
+    accent-color: var(--red);
+  }
+
+  .commitment-method strong,
+  .commitment-method label span span {
+    display: block;
+  }
+
+  .commitment-method strong {
+    font: 600 16px/1.3 var(--font-heading);
+  }
+
+  .commitment-method label span span {
+    margin-top: 3px;
+    color: var(--body-muted);
+    font: 400 14px/1.5 var(--font-body);
+  }
+
+  .commitment-pledge {
+    display: grid;
+    grid-template-columns: 20px minmax(0, 1fr);
+    gap: 14px;
+    align-items: start;
+    padding: 18px;
+    border: 1px solid var(--ink);
+    cursor: pointer;
+    font: 600 17px/1.4 var(--font-heading);
+  }
+
+  .commitment-pledge.field--invalid {
+    border-color: var(--red);
+  }
+
+  .pledge-error.is-visible {
+    display: block;
+  }
+
+  .field-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .commitment-success .eyebrow {
+    margin-bottom: 16px;
+  }
+
+  .commitment-success h3,
+  .commitment-success .prose {
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 640px) {
+    .commitment-card {
+      padding: 20px 18px;
+    }
+
+    .field-row-2 {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

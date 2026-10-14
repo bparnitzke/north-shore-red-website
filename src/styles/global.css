@@ -798,6 +798,17 @@ summary:focus-visible {
   color: var(--red);
 }
 
+.field-optional {
+  color: var(--meta);
+  font: 500 10px/1 var(--font-mono);
+  margin-left: 6px;
+}
+
+.field__hint {
+  font: 400 14px/1.5 var(--font-body);
+  color: var(--body-muted);
+}
+
 .field-row-3 {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
@@ -856,13 +867,13 @@ summary:focus-visible {
   color: var(--body-muted);
 }
 
-.sms-panel {
+.consent-panel {
   background: var(--paper-alt);
   border: 1px solid var(--rule);
   padding: 20px;
 }
 
-.sms-panel label {
+.consent-panel label {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 12px;
@@ -873,20 +884,20 @@ summary:focus-visible {
   letter-spacing: normal;
 }
 
-.sms-panel input {
+.consent-panel input {
   width: 20px;
   height: 20px;
   margin: 2px 0 0;
   accent-color: var(--red);
 }
 
-.sms-panel p {
+.consent-panel p {
   margin: 12px 0 0 32px;
   font: 400 13px/1.65 var(--font-body);
   color: var(--body-muted);
 }
 
-.sms-panel a {
+.consent-panel a {
   color: var(--red);
   border-bottom: 1px solid var(--red-rule);
 }
@@ -904,19 +915,6 @@ summary:focus-visible {
   font: 400 14px/1.6 var(--font-body);
   color: var(--body-muted);
   max-width: 38ch;
-}
-
-.sms-panel__phone {
-  margin: 18px 0 0 32px;
-  max-width: 420px;
-}
-
-.sms-panel__phone[hidden] {
-  display: none;
-}
-
-.sms-panel__phone .field__error {
-  margin: 0;
 }
 
 @media (min-width: 900px) and (max-height: 820px) {

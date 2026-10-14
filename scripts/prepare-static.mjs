@@ -1,8 +1,11 @@
 import { copyFile, mkdir } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 
-const source = resolve("src/data/sms-consent.json");
-const destination = resolve("public/config/sms-consent.json");
+const files = ["sms-consent.json", "email-consent.json"];
 
-await mkdir(dirname(destination), { recursive: true });
-await copyFile(source, destination);
+for (const file of files) {
+  const source = resolve("src/data", file);
+  const destination = resolve("public/config", file);
+  await mkdir(dirname(destination), { recursive: true });
+  await copyFile(source, destination);
+}

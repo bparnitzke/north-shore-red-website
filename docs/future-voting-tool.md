@@ -1,65 +1,50 @@
-# Future Voting-Plan Tool Architecture
+# Early-Vote Commitment Tool
 
-This project reserves `/make-a-plan/` and `/vote/` for a future Wisconsin voting-plan tool. The first phase intentionally does not build a functional lookup, form submission, database, or SMS integration.
+The `/make-a-plan/` route now presents North Shore Red's early-vote message, an early-vote commitment card, and a direct link to the official MyVote Wisconsin website. `/vote/` continues to redirect to this route.
 
-## Purpose
+## Current scope
 
-The future tool should help a Wisconsin voter:
+The commitment card records only:
 
-- Choose how they prefer to vote.
-- Build a personal voting plan.
-- Reach the appropriate official MyVote Wisconsin destination at `https://myvote.wi.gov/en-us/`.
-- Optionally opt in to automated A2P text reminders after receiving a clear, adjacent disclosure.
+- Whether the visitor affirmed an intent to vote before Election Day.
+- The visitor's current intended method: early in person, absentee by mail, or unsure.
+- Name and email address for handling the submission.
+- An optional mobile number.
+- Separate, optional email and SMS enrollment decisions.
+- Submission timestamp, source URL, consent-program identifiers, and the exact versioned consent language displayed.
+
+The form does not request a birth date, street address, voter-registration record, candidate preference, or information entered on MyVote Wisconsin. North Shore Red does not receive information entered on the state website.
 
 ## Product boundaries
 
-- Do not scrape MyVote Wisconsin.
-- Do not imitate or visually masquerade as MyVote Wisconsin.
+- Do not scrape, imitate, or visually masquerade as MyVote Wisconsin.
 - Clearly label MyVote links as official Wisconsin election resources.
-- Do not assume voter data can be passed to MyVote through URL parameters unless that behavior is verified and authorized.
-- The voter must be able to complete the planning flow and receive the official MyVote link without consenting to SMS reminders.
-- Do not collect personal information merely because MyVote asks for it.
+- Do not pass personal information to MyVote through URL parameters.
+- The MyVote link remains available without submitting the commitment card or joining either communication program.
+- Email and SMS controls remain separate and unchecked by default.
+- Do not add exact voting dates, addresses, or other voting-plan details to storage unless they become necessary for an approved reminder program.
+- Do not add advertising pixels or session-replay tools to this page without explicit privacy review.
 
-## Suggested implementation path
+## Current interface states
 
-- Keep the marketing site static until the form is approved.
-- Add a dedicated route at `/make-a-plan/` with isolated components under `src/components/voting-plan/`.
-- Keep plain content and options in TypeScript data files or content collections.
-- Add server-side handling only after storage, provider, security, retention, and deletion requirements are approved.
-- Keep secrets out of the repository and document required environment variables in `.env.example`.
-- Do not expose submissions to client-side analytics.
-- Use HTTPS only in production.
-- Plan bot protection, server-side validation, rate limiting, and minimal logging.
-- Avoid storing full voting-plan details unless needed to provide reminders.
-- Document every third party receiving submitted data.
-- Do not add advertising pixels or session-replay tools to pages that collect voter information without explicit review.
+1. Early-voting-method selection.
+2. Required early-vote commitment affirmation.
+3. Optional email enrollment.
+4. Optional SMS enrollment with an always-visible mobile field.
+5. Success without either communication enrollment.
+6. Success with email, SMS, or both.
+7. Validation error.
+8. Submission or ledger error.
+9. Direct access to Privacy, Terms, and MyVote on mobile.
 
-## Anticipated interface states
+## Before production collection
 
-1. Voting-method selection.
-2. Voting-plan details.
-3. Official MyVote destination.
-4. Optional reminder enrollment.
-5. Unchecked SMS consent.
-6. Success without SMS enrollment.
-7. Success with SMS enrollment.
-8. Validation error.
-9. Submission error.
-10. Privacy/Terms access on mobile.
+- Apply `database/schema.mysql.sql` for a fresh database or the dated migration for an existing consent database.
+- Configure database credentials outside the repository and verify encrypted backups and access restrictions.
+- Test opted-in and declined records for both email and SMS.
+- Approve retention, deletion, export, and incident-response procedures.
+- Have counsel and the selected providers review the public disclosures and policies.
+- Add rate limiting and production bot protection in the hosting layer.
+- Require HTTPS.
 
-The SMS checkbox must never be preselected, disabled in a way that implies it is required, or bundled with general terms acceptance.
-
-## Future consent record fields
-
-If SMS enrollment is approved, preserve auditable consent records including:
-
-- Phone number.
-- Submission timestamp.
-- Source URL.
-- Consent status.
-- Exact version of the consent language displayed.
-- Program or campaign identifier.
-- Relevant voting-plan selections needed to provide the reminders.
-- Any later opt-out status.
-
-Do not implement production storage or collect real personal information until the storage system, retention rules, access controls, security requirements, messaging provider, and deletion process are approved.
+The current code records consent but does not send email-list campaigns or text messages. Provider integrations, unsubscribe/STOP webhooks, and production message delivery remain separate work.

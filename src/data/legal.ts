@@ -3,18 +3,23 @@ export type LegalClause = {
   body: string;
 };
 
-export const effectiveDate = "September 3, 2026";
+export const effectiveDate = "October 14, 2026";
 
 export const privacyClauses: LegalClause[] = [
   {
     heading: "Information we collect",
     body:
-      "We may collect personal information such as your name, email address, message, interests you select, and, if you choose SMS enrollment, your mobile number and consent record. We may also collect limited technical information needed to operate and secure the website."
+      "We may collect personal information such as your name, email address, optional mobile number, message, interests you select, early-voting commitment choice, and communication consent records. We may also collect limited technical information needed to operate and secure the website."
+  },
+  {
+    heading: "Email updates",
+    body:
+      "Email enrollment is optional. If you opt in, North Shore Red may send organization news, event and volunteer information, voting information, and donation appeals. You may unsubscribe at any time. Email addresses and email opt-in records will not be sold. They may be shared with operational service providers solely to deliver and support the email program."
   },
   {
     heading: "Cell phone policy",
     body:
-      "SMS enrollment is optional and is not a condition of a purchase or donation. If you opt in, North Shore Red may send recurring automated messages including voting reminders, election-related information, organization updates, and donation solicitations. Message frequency varies. Message and data rates may apply. Reply STOP to end messages or HELP for help. Mobile information, SMS opt-in data, and consent records will not be sold or shared with third parties or affiliates for their marketing or promotional purposes. They may be shared with operational service providers solely to deliver and support the messaging program."
+      "SMS enrollment is optional and is not a condition of a purchase or donation. If you opt in, North Shore Red may send recurring automated messages including voting reminders, election-related information, organization updates, and donation solicitations. Message frequency varies. Message and data rates may apply. Reply STOP to end messages or HELP for help, or email privacy@northshorered.com. Mobile information, SMS opt-in data, and consent records will not be sold or shared with third parties or affiliates for their marketing or promotional purposes. They may be shared with operational service providers solely to deliver and support the messaging program."
   },
   {
     heading: "How we use your information",

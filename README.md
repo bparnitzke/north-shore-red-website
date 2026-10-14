@@ -24,8 +24,8 @@ organization. Built to "The Civic Ledger" design system from the Claude Design h
   invitation list, or a general message); supports `?interest=volunteer` and `?interest=event`
   to pre-check the matching box
 - `/privacy-policy/`, `/terms-and-conditions/` — legal copy carried verbatim from the live site
-- `/make-a-plan/`, `/vote/` — reserved for the future voting-plan tool (see
-  `docs/future-voting-tool.md`)
+- `/make-a-plan/`, `/vote/` — early-vote message, commitment card, and official MyVote handoff
+  (see `docs/future-voting-tool.md`)
 - `/events/`, `/volunteer/` — thin redirects (`/#next-event`, `/contact/?interest=volunteer`);
   there is no standalone events or volunteer page by design
 
@@ -48,17 +48,19 @@ using `mail()` for delivery. It:
   set to the submitter and the checked interests in the subject/body.
 - Rejects the submission if the honeypot field is filled or if it arrives less than ~2 seconds
   after the form rendered (both silent to the caller, so bots don't learn why they failed).
-- Validates name, email, and comments server-side in addition to the client-side checks.
-- Records an append-only SMS decision with a UTC timestamp, source URL, program ID, selected
-  interests, disclosure version, and the exact disclosure text shown. A mobile number is stored
-  only when SMS is selected.
+- Validates required identity and commitment fields server-side in addition to the client-side checks. Comments are optional.
+- Records separate append-only email and SMS decisions with a UTC timestamp, source URL, program
+  ID, selected interests, disclosure version, and the exact disclosure text shown. Contact data is
+  stored in a consent ledger only for the channel the visitor selected.
+- Records the early-vote commitment and selected early-voting method without collecting a birth
+  date, street address, or government voter record.
 - Redirects a plain `GET` (e.g., an old bookmark to the previous site's `contact.php`) to
   `/contact/` instead of returning an empty API response.
 
-Run `database/schema.mysql.sql` once and configure `NSR_DB_DSN`, `NSR_DB_USER`, and
+Run `database/schema.mysql.sql` once, or apply the dated migration to an existing consent database, and configure `NSR_DB_DSN`, `NSR_DB_USER`, and
 `NSR_DB_PASSWORD` on the host. The form fails closed if the ledger cannot be written. See
 `docs/contact-consent-ledger.md` for setup, testing, and future opt-out handling. The site records
-consent but does not send SMS messages.
+consent but does not send email campaigns or SMS messages.
 
 ## Social feed
 
@@ -76,15 +78,14 @@ configured. Visitors receive ordinary static HTML instead of third-party feed sc
 - Why donate page copy: `src/data/whydonate.ts`
 - Contact form interest options and success-state copy: `src/data/contact.ts`
 - Privacy/Terms clauses: `src/data/legal.ts`
-- SMS disclosure text and version: `src/data/sms-consent.json`
+- Email and SMS disclosure text and versions: `src/data/email-consent.json`, `src/data/sms-consent.json`
 - Design tokens (colors, type scale, spacing) and shared chrome: `src/styles/global.css`
 
 ## Still needed from the client
 
 See `docs/content-confirmation-checklist.md`, plus, per the design handoff:
 
-1. The voting-plan tool URL (`site.votingPlanUrl` in `src/data/site.ts` — currently `null`,
-   so the nav and CTAs fall back to the internal `/make-a-plan/` page until it's set).
+1. Final approval of the early-vote commitment workflow and the internal `/make-a-plan/` route.
 2. Garden Party venue and program details.
 3. Photography for remaining content needs.
 4. Internal verification of figures in `src/data/record.ts` and `src/data/whydonate.ts`.
@@ -106,7 +107,7 @@ See `docs/content-confirmation-checklist.md`, plus, per the design handoff:
 - Existing site inventory: `docs/existing-site-inventory.md`
 - Asset inventory: `docs/asset-inventory.md`
 - Content confirmation checklist: `docs/content-confirmation-checklist.md`
-- Future voting tool architecture: `docs/future-voting-tool.md`
+- Early-vote commitment architecture: `docs/future-voting-tool.md`
 - Future SMS/10DLC checklist: `docs/sms-10dlc-checklist.md`
 - Contact consent ledger: `docs/contact-consent-ledger.md`
 - Social feed setup: `docs/social-feed.md`

@@ -1,0 +1,9 @@
+{
+  "version": "2026-10-14-v1",
+  "programId": "nsr-email-updates",
+  "checkboxLabel": "Email me updates from North Shore Red.",
+  "beforePolicyLinks": "By checking this box, you agree to receive emails from North Shore Red about organization news, events, volunteer opportunities, voting information, and donation appeals. You may unsubscribe at any time. Email opt-in information will not be sold. See our",
+  "betweenPolicyLinks": "and",
+  "afterPolicyLinks": ".",
+  "exactText": "Email me updates from North Shore Red. By checking this box, you agree to receive emails from North Shore Red about organization news, events, volunteer opportunities, voting information, and donation appeals. You may unsubscribe at any time. Email opt-in information will not be sold. See our Privacy Policy and Terms of Use."
+}

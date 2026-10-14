@@ -15,8 +15,8 @@ export const site = {
   logoLightBg: "/assets/north-shore-red-logo.jpg",
   donationUrl: "https://secure.winred.com/friends-of-north-shore-red/donate",
   myVoteUrl: "https://myvote.wi.gov/en-us/",
-  // TODO(client): supply the voting-plan tool's own URL. Until then the nav
-  // and CTAs fall back to the internal /make-a-plan/ page.
+  // Keep null to use the internal early-vote commitment page. A future approved
+  // external campaign tool can replace it without changing navigation components.
   votingPlanUrl: null as string | null,
   socialLinks: {
     facebook: "https://www.facebook.com/share/1ZQbJjCNyy/?mibextid=wwXIfr",
@@ -36,7 +36,7 @@ export const primaryNav: NavItem[] = [
   { label: "Why donate to us", href: "/donate/" },
   { label: "Events", href: "/#next-event" },
   {
-    label: "Make a voting plan",
+    label: "Commit to vote early",
     href: site.votingPlanUrl ?? "/make-a-plan/",
     external: Boolean(site.votingPlanUrl)
   },

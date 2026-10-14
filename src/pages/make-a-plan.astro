@@ -1,26 +1,28 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import EarlyVoteCommitmentForm from "../components/EarlyVoteCommitmentForm.astro";
 import { site } from "../data/site";
 ---
 
 <BaseLayout
-  title="Make a Voting Plan"
-  description="Watch a short voting message, make a plan, and continue to Wisconsin's official MyVote resource."
+  title="Commit to Vote Early"
+  description="Watch a short message, commit to vote early, and continue to Wisconsin's official MyVote resource."
 >
   <section class="band band--hero voting-hero">
     <div>
       <span class="eyebrow voting-hero__eyebrow">Wisconsin voting</span>
-      <h1>Vote early.<br />Make a plan.</h1>
+      <h1>Vote early.<br />Make it count.</h1>
     </div>
     <div class="voting-hero__intro">
       <p class="lead">
-        Deciding how and when you will vote makes it easier to follow through. Watch this short message, then
-        continue to Wisconsin's official MyVote site for the information you need.
+        Election Day does not have to be the only plan. Commit now to cast your ballot early, then use
+        Wisconsin's official MyVote site to confirm the information that applies to you.
       </p>
-      <a class="btn btn--primary" href={site.myVoteUrl} target="_blank" rel="noopener">
-        Go to MyVote Wisconsin
-      </a>
-      <p class="meta voting-hero__note">Official state resource · Opens in a new tab</p>
+      <div class="voting-hero__actions">
+        <a class="btn btn--primary" href="#commitment-card">Commit to vote early</a>
+        <a class="link-arrow" href={site.myVoteUrl} target="_blank" rel="noopener">Check MyVote Wisconsin →</a>
+      </div>
+      <p class="meta voting-hero__note">MyVote is an official state resource · Opens in a new tab</p>
     </div>
   </section>
 
@@ -44,40 +46,26 @@ import { site } from "../data/site";
     </div>
   </section>
 
-  <section class="band plan-steps" aria-labelledby="plan-steps-title">
-    <div class="plan-steps__intro">
-      <span class="eyebrow">Your voting plan</span>
-      <h2 id="plan-steps-title">Three decisions. One less thing left to chance.</h2>
+  <section class="band commitment-band" id="commitment-card" aria-labelledby="commitment-title">
+    <div class="commitment-band__intro">
+      <span class="eyebrow">Early-vote commitment</span>
+      <h2 id="commitment-title">Put your commitment on the record.</h2>
+      <p class="prose">
+        Tell us how you intend to vote early. We collect only the choice needed for this commitment, not your
+        date of birth, street address, or government voting record.
+      </p>
+      <p class="prose prose--small commitment-band__note">
+        Email updates and text messages are optional, separate choices. Neither is required to submit your
+        commitment or use MyVote Wisconsin.
+      </p>
     </div>
-    <ol class="plan-steps__list">
-      <li>
-        <span aria-hidden="true">01</span>
-        <div>
-          <h3>Choose how</h3>
-          <p>Decide whether you plan to vote absentee, early in person, or on election day.</p>
-        </div>
-      </li>
-      <li>
-        <span aria-hidden="true">02</span>
-        <div>
-          <h3>Confirm the details</h3>
-          <p>Use MyVote Wisconsin to check the official information that applies to you.</p>
-        </div>
-      </li>
-      <li>
-        <span aria-hidden="true">03</span>
-        <div>
-          <h3>Put it on your calendar</h3>
-          <p>Choose a day and time now, then keep the plan somewhere you will see it.</p>
-        </div>
-      </li>
-    </ol>
+    <EarlyVoteCommitmentForm />
   </section>
 
   <section class="band band--ink myvote-handoff">
     <div>
       <span class="eyebrow">Official election information</span>
-      <h2>Continue with MyVote Wisconsin</h2>
+      <h2>Confirm your official voting information</h2>
       <p class="prose">
         MyVote Wisconsin is operated by the Wisconsin Elections Commission. North Shore Red does not receive
         the information you enter on the state website.
@@ -118,6 +106,13 @@ import { site } from "../data/site";
     margin-bottom: 24px;
   }
 
+  .voting-hero__actions {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+  }
+
   .voting-hero__note {
     margin-top: 12px;
   }
@@ -150,52 +145,32 @@ import { site } from "../data/site";
     background: var(--ink);
   }
 
-  .plan-steps {
+  .commitment-band {
     display: grid;
-    grid-template-columns: minmax(250px, 0.75fr) minmax(0, 1.25fr);
+    grid-template-columns: minmax(250px, 0.7fr) minmax(0, 1.3fr);
     gap: 64px;
     background: var(--paper-alt);
+    align-items: start;
   }
 
-  .plan-steps__intro .eyebrow {
+  .commitment-band__intro {
+    position: sticky;
+    top: 24px;
+  }
+
+  .commitment-band__intro .eyebrow {
     margin-bottom: 18px;
   }
 
-  .plan-steps__intro h2 {
+  .commitment-band__intro h2 {
     max-width: 18ch;
+    margin-bottom: 16px;
   }
 
-  .plan-steps__list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    border-top: 1px solid var(--ink);
-  }
-
-  .plan-steps__list li {
-    display: grid;
-    grid-template-columns: 54px minmax(0, 1fr);
-    gap: 18px;
-    padding: 20px 0;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .plan-steps__list li > span {
-    font: 600 12px/1.2 var(--font-mono);
-    color: var(--red);
-    padding-top: 4px;
-  }
-
-  .plan-steps__list h3 {
-    font-size: 22px;
-    margin-bottom: 6px;
-  }
-
-  .plan-steps__list p {
-    color: var(--body);
-    font-size: 16px;
-    line-height: 1.6;
-    max-width: 52ch;
+  .commitment-band__note {
+    border-top: 1px solid var(--rule);
+    margin-top: 22px;
+    padding-top: 16px;
   }
 
   .myvote-handoff {
@@ -230,7 +205,7 @@ import { site } from "../data/site";
   @media (max-width: 899.98px) {
     .voting-hero,
     .video-band,
-    .plan-steps,
+    .commitment-band,
     .myvote-handoff {
       grid-template-columns: 1fr;
       gap: 28px;
@@ -238,6 +213,10 @@ import { site } from "../data/site";
 
     .voting-hero {
       align-items: start;
+    }
+
+    .commitment-band__intro {
+      position: static;
     }
 
     .video-band__heading h2 {

@@ -20,5 +20,7 @@ Before launch, confirm or replace:
 - Whether any current or planned photos have usage rights, captions, dates, and replacement alt text.
 - Events data source and publishing process.
 - Volunteer data destination and consent language.
+- Early-vote commitment wording, selected method options, retention period, and authorized access to commitment records.
+- Email enrollment disclosure, provider, unsubscribe handling, and append-only consent export process.
 - Privacy Policy and Terms and Conditions drafted specifically for North Shore Red.
 - Any political, election-related, fundraising, SMS, TCPA, 10DLC, Wisconsin, federal, tax, or campaign-finance language requiring legal/provider review.

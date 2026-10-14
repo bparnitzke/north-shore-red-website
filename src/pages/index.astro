@@ -97,7 +97,6 @@ import { site } from "../data/site";
             </div>
           ))}
         </div>
-        <div class="meta" style="padding-top: 14px;">{nextEvent.hostNote}</div>
       </div>
       <div class="event-spotlight__cta">
         <a class="btn btn--primary" href="/contact/?interest=event">Join the invitation list</a>
@@ -126,12 +125,12 @@ import { site } from "../data/site";
   <section class="band columns-2">
     <div class="voting-callout">
       <span class="eyebrow" style="padding-bottom: 16px; display:block;">07 — Voting</span>
-      <h3 style="margin-bottom: 12px;">Make a voting plan</h3>
+      <h3 style="margin-bottom: 12px;">Commit to vote early</h3>
       <p class="prose" style="margin-bottom: 18px;">
-        Watch our short Vote Early, Wisconsin message, decide how and when you will vote, and continue to the
-        state's official MyVote resource for the details that apply to you.
+        Watch our short Vote Early, Wisconsin message, make your early-vote commitment, and use the state's
+        official MyVote resource to confirm the information that applies to you.
       </p>
-      <a class="btn btn--primary" href={site.votingPlanUrl ?? "/make-a-plan/"} target={site.votingPlanUrl ? "_blank" : undefined} rel={site.votingPlanUrl ? "noopener" : undefined}>Make your voting plan</a>
+      <a class="btn btn--primary" href={site.votingPlanUrl ?? "/make-a-plan/"} target={site.votingPlanUrl ? "_blank" : undefined} rel={site.votingPlanUrl ? "noopener" : undefined}>Commit to vote early</a>
     </div>
     <div>
       <span class="eyebrow" style="padding-bottom: 16px; display:block;">08 — Why donate to us</span>
@@ -276,14 +275,16 @@ import { site } from "../data/site";
   }
 
   .event-spotlight__details {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     border-top: 1px solid var(--rule);
     max-width: 56ch;
     margin-top: 14px;
   }
 
   .event-spotlight__details > div {
-    padding: 12px 20px 0 0;
+    min-width: 0;
+    padding: 12px 14px 0;
     border-right: 1px solid var(--rule);
   }
 
@@ -293,11 +294,11 @@ import { site } from "../data/site";
 
   .event-spotlight__details > div:last-child {
     border-right: none;
-    padding-right: 0;
   }
 
   .event-spotlight__detail-value {
-    font: 600 20px/1 var(--font-heading);
+    font: 600 18px/1.2 var(--font-heading);
+    white-space: nowrap;
   }
 
   .event-spotlight__cta {
@@ -340,11 +341,12 @@ import { site } from "../data/site";
   }
 
   .event-gallery figure:first-child {
-    grid-row: 1 / 3;
+    grid-column: 2 / 4;
   }
 
   .event-gallery figure:nth-child(2) {
-    grid-column: 2 / 4;
+    grid-column: 1;
+    grid-row: 1 / 3;
   }
 
   .event-gallery img {
@@ -354,11 +356,13 @@ import { site } from "../data/site";
   }
 
   .event-gallery figure:first-child img {
-    object-position: 50% 45%;
+    object-position: 50% 38%;
   }
 
   .event-gallery figure:nth-child(2) img {
-    object-position: 50% 58%;
+    width: 128%;
+    max-width: none;
+    object-position: left 50%;
   }
 
   .event-gallery figure:nth-child(3) img {
@@ -386,7 +390,7 @@ import { site } from "../data/site";
     }
 
     .event-spotlight__details {
-      flex-wrap: wrap;
+      max-width: none;
     }
 
     .event-spotlight__status {
@@ -419,6 +423,23 @@ import { site } from "../data/site";
     .event-gallery figure:nth-child(2) {
       grid-column: 1 / 3;
       grid-row: auto;
+    }
+
+  }
+
+  @media (max-width: 560px) {
+    .event-spotlight__details {
+      grid-template-columns: 1fr;
+    }
+
+    .event-spotlight__details > div {
+      padding: 12px 0;
+      border-right: none;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .event-spotlight__details > div:last-child {
+      border-bottom: none;
     }
   }
 </style>

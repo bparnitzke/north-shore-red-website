@@ -3,3 +3,4 @@ dist/
 .astro/
 .env
 public/config/sms-consent.json
+public/config/email-consent.json

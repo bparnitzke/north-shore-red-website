@@ -1,15 +1,10 @@
-export type InterestKey = "list" | "event" | "volunteer";
+export type InterestKey = "event" | "volunteer";
 
 export const interestOptions: Array<{
   key: InterestKey;
   label: string;
   description: string;
 }> = [
-  {
-    key: "list",
-    label: "Join the general mailing list",
-    description: "Occasional updates from the board on what the organization is doing."
-  },
   {
     key: "event",
     label: "Join the fundraiser invitation list",

@@ -1,5 +1,6 @@
 ---
 import { interestOptions } from "../data/contact";
+import emailConsent from "../data/email-consent.json";
 import smsConsent from "../data/sms-consent.json";
 ---
 
@@ -18,6 +19,9 @@ import smsConsent from "../data/sms-consent.json";
   <input type="hidden" name="source_url" value="" />
   <input type="hidden" name="sms_consent_version" value={smsConsent.version} />
   <input type="hidden" name="sms_program_id" value={smsConsent.programId} />
+  <input type="hidden" name="email_consent_version" value={emailConsent.version} />
+  <input type="hidden" name="email_program_id" value={emailConsent.programId} />
+  <input type="hidden" name="form_type" value="contact" />
 
   <div class="interest-panel">
     <div class="interest-panel__title">What would you like to do?</div>
@@ -39,22 +43,6 @@ import smsConsent from "../data/sms-consent.json";
     <p class="field__error">Please enter your name.</p>
   </div>
 
-  <div class="sms-panel" style="margin-top: 22px">
-    <label for="c-sms">
-      <input id="c-sms" name="sms_consent" type="checkbox" aria-controls="sms-phone-field" aria-expanded="false" />
-      <span>{smsConsent.checkboxLabel}</span>
-    </label>
-    <p>
-      {smsConsent.beforePolicyLinks} <a href="/privacy-policy/">Privacy Policy</a> {smsConsent.betweenPolicyLinks}
-      <a href="/terms-and-conditions/">Terms of Use</a>{smsConsent.afterPolicyLinks}
-    </p>
-    <div class="field sms-panel__phone" id="sms-phone-field" hidden>
-      <label for="c-phone">Mobile number <span class="field-required">*</span></label>
-      <input id="c-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" disabled />
-      <p class="field__error">Please enter a valid mobile number.</p>
-    </div>
-  </div>
-
   <div class="field" style="margin-top: 22px">
     <label for="c-email">Email <span class="field-required">*</span></label>
     <input id="c-email" name="email" type="email" required autocomplete="email" />
@@ -62,9 +50,37 @@ import smsConsent from "../data/sms-consent.json";
   </div>
 
   <div class="field" style="margin-top: 22px">
-    <label for="c-comments">Comments <span class="field-required">*</span></label>
-    <textarea id="c-comments" name="comments" rows="6" required></textarea>
-    <p class="field__error">Please add a short message.</p>
+    <label for="c-phone">Mobile number <span id="c-phone-optional" class="field-optional">Optional</span><span id="c-phone-required" class="field-required" hidden> *</span></label>
+    <input id="c-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" pattern="[0-9+() .-]{10,24}" maxlength="24" />
+    <p class="field__hint">Required only if you choose text messages below.</p>
+    <p class="field__error">Please enter a valid mobile number.</p>
+  </div>
+
+  <div class="field" style="margin-top: 22px">
+    <label for="c-comments">Comments <span class="field-optional">Optional</span></label>
+    <textarea id="c-comments" name="comments" rows="6"></textarea>
+  </div>
+
+  <div class="consent-panel" style="margin-top: 22px">
+    <label for="c-email-updates">
+      <input id="c-email-updates" name="email_consent" type="checkbox" />
+      <span>{emailConsent.checkboxLabel}</span>
+    </label>
+    <p>
+      {emailConsent.beforePolicyLinks} <a href="/privacy-policy/">Privacy Policy</a> {emailConsent.betweenPolicyLinks}
+      <a href="/terms-and-conditions/">Terms of Use</a>{emailConsent.afterPolicyLinks}
+    </p>
+  </div>
+
+  <div class="consent-panel" style="margin-top: 14px">
+    <label for="c-sms">
+      <input id="c-sms" name="sms_consent" type="checkbox" aria-controls="c-phone" aria-expanded="false" />
+      <span>{smsConsent.checkboxLabel}</span>
+    </label>
+    <p>
+      {smsConsent.beforePolicyLinks} <a href="/privacy-policy/">Privacy Policy</a> {smsConsent.betweenPolicyLinks}
+      <a href="/terms-and-conditions/">Terms of Use</a>{smsConsent.afterPolicyLinks}
+    </p>
   </div>
 
   <div class="form-submit-row">
@@ -86,19 +102,18 @@ import smsConsent from "../data/sms-consent.json";
     if (sourceUrl) sourceUrl.value = window.location.href;
 
     const smsCheckbox = form.querySelector<HTMLInputElement>("#c-sms");
-    const phoneField = form.querySelector<HTMLElement>("#sms-phone-field");
     const phoneInput = form.querySelector<HTMLInputElement>("#c-phone");
+    const phoneOptional = form.querySelector<HTMLElement>("#c-phone-optional");
+    const phoneRequired = form.querySelector<HTMLElement>("#c-phone-required");
     const syncSmsFields = () => {
       const enabled = Boolean(smsCheckbox?.checked);
-      if (phoneField) phoneField.hidden = !enabled;
       if (phoneInput) {
-        phoneInput.disabled = !enabled;
         phoneInput.required = enabled;
-        if (!enabled) {
-          phoneInput.value = "";
-          setFieldValid(phoneInput, true);
-        }
+        phoneInput.setAttribute("aria-required", String(enabled));
+        setFieldValid(phoneInput, phoneInput.checkValidity());
       }
+      if (phoneOptional) phoneOptional.hidden = enabled;
+      if (phoneRequired) phoneRequired.hidden = !enabled;
       smsCheckbox?.setAttribute("aria-expanded", String(enabled));
     };
 
@@ -123,8 +138,8 @@ import smsConsent from "../data/sms-consent.json";
 
     const validate = () => {
       let valid = true;
-      const required = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>("[required]");
-      required.forEach((field) => {
+      const fields = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>("[required], #c-phone");
+      fields.forEach((field) => {
         const fieldValid = field.checkValidity();
         setFieldValid(field, fieldValid);
         if (!fieldValid) valid = false;
@@ -132,7 +147,7 @@ import smsConsent from "../data/sms-consent.json";
       return valid;
     };
 
-    form.querySelectorAll("[required]").forEach((field) => {
+    form.querySelectorAll("[required], #c-phone").forEach((field) => {
       field.addEventListener("input", () => setFieldValid(field as HTMLElement, (field as HTMLInputElement).checkValidity()));
     });
 

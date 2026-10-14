@@ -33,9 +33,9 @@ export const nextEvent = {
   description:
     "Planning is underway for our next Conservative Cocktails gathering. The date, venue, keynote speaker, and attendance fee will be announced to invited guests.",
   details: [
-    { label: "Date & venue", value: "To be announced" },
-    { label: "Keynote", value: "To be announced" },
-    { label: "Attendance fee", value: "To be announced" }
+    { label: "Date & venue", value: "TBD" },
+    { label: "Keynote", value: "TBD" },
+    { label: "Attendance fee", value: "TBD" }
   ],
   hostNote: "Requesting an invitation does not reserve a ticket or require payment.",
   footNote:
@@ -49,13 +49,13 @@ export const previousEvent = {
   photos: [
     {
       src: "/assets/events/2026-garden-party/garden-party-program.jpg",
-      alt: "Attendees listening to the program during the 2026 North Shore Red Garden Party",
-      caption: "The program"
+      alt: "Attendees listening as former Governor Tommy Thompson speaks at the 2026 North Shore Red Garden Party",
+      caption: "Attendees listen to Tommy Thompson"
     },
     {
       src: "/assets/events/2026-garden-party/garden-party-table.jpg",
-      alt: "Guests gathered around a dining table at the 2026 North Shore Red Garden Party",
-      caption: "Around the table"
+      alt: "Attendees discussing upcoming elections around a dining table at the 2026 North Shore Red Garden Party",
+      caption: "Attendees discuss upcoming elections"
     },
     {
       src: "/assets/events/2026-garden-party/garden-party-refreshments.jpg",
